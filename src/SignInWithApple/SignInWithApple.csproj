@@ -20,9 +20,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\AspNet.Security.OAuth.Providers\src\AspNet.Security.OAuth.Apple\AspNet.Security.OAuth.Apple.csproj" />
-  </ItemGroup>
   <Target Name="AddGeneratedContentItems" BeforeTargets="AssignTargetPaths">
     <ItemGroup>
       <Content Include="*.p8" CopyToPublishDirectory="PreserveNewest" Exclude="$(DefaultItemExcludes)" />
