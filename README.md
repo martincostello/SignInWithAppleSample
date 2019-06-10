@@ -2,7 +2,7 @@
 
 | | Linux/macOS | Windows |
 |:-:|:-:|:-:|
-| **Build Status** | [![Build status](https://img.shields.io/travis/martincostello/SignInWithAppleSample/master.svg)](https://travis-ci.org/martincostello/SignInWithAppleSample) | [![Build status](https://img.shields.io/appveyor/ci/martincostello/signinwithapplesample/master.svg)](https://ci.appveyor.com/project/martincostello/signinwithapplesample) |
+| **Build Status** | [![Build status](https://img.shields.io/travis-ci/martincostello/SignInWithAppleSample/master.svg)](https://travis-ci.com/martincostello/SignInWithAppleSample) | [![Build status](https://img.shields.io/appveyor/ci/martincostello/signinwithapplesample/master.svg)](https://ci.appveyor.com/project/martincostello/signinwithapplesample) |
 
 This repository contains a sample implementation of [_Sign In with Apple_](https://developer.apple.com/sign-in-with-apple/) for ASP.NET Core 2.2 written in C#.
 
