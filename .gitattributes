@@ -1,0 +1,5 @@
+* text=auto
+*.sh eol=lf
+*.cer binary
+*.p8 binary
+*.pfx binary

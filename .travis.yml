@@ -1,0 +1,27 @@
+sudo: required
+dist: xenial
+
+os:
+  - linux
+  - osx
+
+env:
+  global:
+    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+    - NUGET_XMLDOC_MODE=skip
+
+branches:
+  only:
+    - master
+
+addons:
+  apt:
+    packages:
+    - gettext
+    - libcurl4-openssl-dev
+    - libicu-dev
+    - libssl-dev
+    - libunwind8
+
+script:
+  - ./build.sh

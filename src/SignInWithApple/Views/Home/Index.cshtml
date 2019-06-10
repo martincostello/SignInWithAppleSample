@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="h5">Sign In with Apple</h1>
+        </div>
+        <div class="card-body">
+            <p class="lead">
+                This page demonstrates an integration of <a href="https://developer.apple.com/sign-in-with-apple/" rel="noopener" target="_blank">Sign In with Apple</a>.
+            </p>
+            @if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                <p class="text-justify">
+                    @foreach (var claim in Context.User.Claims)
+                    {
+                        <div><code>@claim.Type</code>: <strong>@claim.Value</strong></div>
+                    }
+                </p>
+
+                <a class="btn btn-lg btn-danger" href="/signout?returnUrl=%2F">Sign out</a>
+            }
+            else
+            {
+                <p class="text-justify">
+                    Click the button below to sign into this sample application with your Apple ID.
+                </p>
+                <form action="/signin" method="post">
+                    <button class="btn btn-lg btn-dark m-1 sign-in-with-apple" type="submit">
+                        Sign In with Apple
+                    </button>
+                </form>
+            }
+        </div>
+    </div>
+</div>

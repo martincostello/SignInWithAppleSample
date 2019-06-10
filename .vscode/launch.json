@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Sign In with Apple sample",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceRoot}/src/SignInWithApple/bin/Debug/netcoreapp2.2/MartinCostello.SignInWithApple.dll",
+      "args": [],
+      "cwd": "${workspaceRoot}/src/SignInWithApple",
+      "stopAtEntry": false,
+      "internalConsoleOptions": "openOnSessionStart",
+      "launchBrowser": {
+        "enabled": true,
+        "args": "https://localhost:5001",
+        "windows": {
+          "command": "cmd.exe",
+          "args": "/C start https://localhost:5001"
+        },
+        "osx": {
+          "command": "open"
+        },
+        "linux": {
+          "command": "xdg-open"
+        }
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceRoot}/src/SignInWithApple/Views"
+      }
+    }
+  ]
+}
