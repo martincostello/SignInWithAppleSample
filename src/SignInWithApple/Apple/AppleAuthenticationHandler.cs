@@ -5,14 +5,19 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 
 namespace AspNet.Security.OAuth.Apple
 {
@@ -50,6 +55,15 @@ namespace AspNet.Security.OAuth.Apple
         {
             get { return (AppleAuthenticationEvents)base.Events; }
             set { base.Events = value; }
+        }
+
+        /// <inheritdoc />
+        protected override string BuildChallengeUrl(AuthenticationProperties properties, string redirectUri)
+        {
+            string challengeUrl = base.BuildChallengeUrl(properties, redirectUri);
+
+            // Apple requires the response mode to be form_post when the email or name scopes are requested
+            return QueryHelpers.AddQueryString(challengeUrl, "response_mode", "form_post");
         }
 
         /// <inheritdoc />
@@ -104,6 +118,30 @@ namespace AspNet.Security.OAuth.Apple
             }
 
             return await base.ExchangeCodeAsync(code, redirectUri);
+        }
+
+        /// <inheritdoc />
+        protected override Task<HandleRequestResult> HandleRemoteAuthenticateAsync()
+        {
+            // HACK If form_post was used, then copy the parameters from the form into the
+            // query string so we can re-use the implementation in the base class to handle
+            // the authentication, rather than re-implement it to support using the form.
+            if (string.Equals(Request.Method, HttpMethod.Post.Method, StringComparison.OrdinalIgnoreCase))
+            {
+                var queryCopy = new Dictionary<string, StringValues>(Request.Query);
+
+                foreach (var parameter in Request.Form)
+                {
+                    if (!queryCopy.ContainsKey(parameter.Key))
+                    {
+                        queryCopy[parameter.Key] = parameter.Value;
+                    }
+                }
+
+                Request.Query = new QueryCollection(queryCopy);
+            }
+
+            return base.HandleRemoteAuthenticateAsync();
         }
 
         private string GetNameIdentifier(string token)
