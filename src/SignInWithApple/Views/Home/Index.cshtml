@@ -12,7 +12,9 @@
                 <p class="text-justify">
                     @foreach (var claim in Context.User.Claims)
                     {
-                        <div><code>@claim.Type</code>: <strong>@claim.Value</strong></div>
+                        <div>
+                            <code>@claim.Type</code>: <strong>@claim.Value</strong> (<code>@claim.Issuer</code>)
+                        </div>
                     }
                 </p>
 
