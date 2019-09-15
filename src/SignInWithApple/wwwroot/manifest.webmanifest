@@ -1,7 +1,7 @@
 {
-  "name": "Sign In with Apple Sample",
-  "short_name": "Sign In with Apple",
-  "description": "A sample implementation of Sign In with Apple using ASP.NET Core.",
+  "name": "Sign in with Apple Sample",
+  "short_name": "Sign in with Apple",
+  "description": "A sample implementation of Sign in with Apple using ASP.NET Core.",
   "start_url": "/",
   "background_color": "#fff",
   "theme_color": "#222",

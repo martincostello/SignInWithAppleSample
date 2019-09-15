@@ -1,11 +1,11 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <h1 class="h5">Sign In with Apple</h1>
+            <h1 class="h5">Sign in with Apple</h1>
         </div>
         <div class="card-body">
             <p class="lead">
-                This page demonstrates an integration of <a href="https://developer.apple.com/sign-in-with-apple/" rel="noopener" target="_blank">Sign In with Apple</a>.
+                This page demonstrates an integration of <a href="https://developer.apple.com/sign-in-with-apple/" rel="noopener" target="_blank">Sign in with Apple</a>.
             </p>
             @if (User?.Identity?.IsAuthenticated ?? false)
             {
@@ -27,7 +27,7 @@
                 </p>
                 <form action="/signin" method="post">
                     <button class="btn btn-lg btn-dark m-1 sign-in-with-apple" type="submit">
-                        Sign In with Apple
+                        Sign in with Apple
                     </button>
                 </form>
             }

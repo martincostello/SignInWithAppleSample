@@ -1,16 +1,16 @@
-# _Sign In with Apple_ Example Integration
+# _Sign in with Apple_ Example Integration
 
 | | Linux/macOS | Windows |
 |:-:|:-:|:-:|
 | **Build Status** | [![Build status](https://img.shields.io/travis/com/martincostello/SignInWithAppleSample/master.svg)](https://travis-ci.com/martincostello/SignInWithAppleSample) | [![Build status](https://img.shields.io/appveyor/ci/martincostello/signinwithapplesample/master.svg)](https://ci.appveyor.com/project/martincostello/signinwithapplesample) |
 
-This repository contains a sample implementation of [_Sign In with Apple_](https://developer.apple.com/sign-in-with-apple/) for ASP.NET Core 2.2 written in C#.
+This repository contains a sample implementation of [_Sign in with Apple_](https://developer.apple.com/sign-in-with-apple/) for ASP.NET Core 2.2 written in C#.
 
 ## Overview
 
-_Sign In with Apple_ is a way of allowing users of websites to sign in using their Apple ID.
+_Sign in with Apple_ is a way of allowing users of websites to sign in using their Apple ID.
 
-This example integration shows a minimal sample of how to integrate _Sign In with Apple_ a website to authenticate a user using their Apple ID and retrieve their email address (or a relay address to it) and their name*.
+This example integration shows a minimal sample of how to integrate _Sign in with Apple_ a website to authenticate a user using their Apple ID and retrieve their email address (or a relay address to it) and their name*.
 
 _*Retrieving the user's email and name is not yet implemented._
 
@@ -29,7 +29,7 @@ To setup the repository to run the sample, perform the steps below:
     * `AppleClientId`
     * `AppleKeyId`
     * `AppleTeamId`
-  1. Deploy the application to the hosting environment for the domain where you wish to use _Sign In with Apple_.
+  1. Deploy the application to the hosting environment for the domain where you wish to use _Sign in with Apple_.
   1. Verify the domain in the [Apple Developer Portal](https://developer.apple.com/account/).
 
 You should now be able to sign in with your Apple ID in the deployed application.
@@ -57,6 +57,6 @@ This project is licensed under the [Apache 2.0](https://github.com/martincostell
 
 ## External Links
 
-  * [Sign In with Apple](https://developer.apple.com/sign-in-with-apple/)
+  * [Sign in with Apple](https://developer.apple.com/sign-in-with-apple/)
   * [Apple Developer Portal](https://developer.apple.com/account/)
-  * [Prototyping Sign In with Apple for ASP.NET Core](https://blog.martincostello.com/sign-in-with-apple-prototype-for-aspnet-core/)
+  * [Prototyping Sign in with Apple for ASP.NET Core](https://blog.martincostello.com/sign-in-with-apple-prototype-for-aspnet-core/)
