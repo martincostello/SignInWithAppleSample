@@ -8,12 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 
 namespace MartinCostello.SignInWithApple
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public Startup(IConfiguration configuration, IHostEnvironment environment)
         {
             Configuration = configuration;
             Environment = environment;
@@ -21,7 +23,7 @@ namespace MartinCostello.SignInWithApple
 
         private IConfiguration Configuration { get; }
 
-        private IHostingEnvironment Environment { get; }
+        private IHostEnvironment Environment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -44,7 +46,7 @@ namespace MartinCostello.SignInWithApple
                 });
 
             services.AddMvc(options => options.Filters.Add(new RequireHttpsAttribute()))
-                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         public void Configure(IApplicationBuilder app)
@@ -52,6 +54,7 @@ namespace MartinCostello.SignInWithApple
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                IdentityModelEventSource.ShowPII = true;
             }
             else
             {
@@ -75,9 +78,12 @@ namespace MartinCostello.SignInWithApple
                 ServeUnknownFileTypes = true, // Required to serve the files in the .well-known folder
             });
 
-            app.UseAuthentication();
+            app.UseRouting();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }
     }
 }
