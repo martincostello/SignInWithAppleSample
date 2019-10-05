@@ -26,9 +26,9 @@ To setup the repository to run the sample, perform the steps below:
   1. Either add your `.p8` file contining the private key to generate the client secret to the root of the application in `src\SignInWithApple` (but **not** in the `wwwroot` folder), or use some other mechanism, such as loading it from a blob storage account.
   1. Update the favicon (`src\SignInWithApple\wwwroot\favicon.ico`) to your own design.
   1. Configure the following settings as appropriate in either your environment variables or in `src\SignInWithApple\appsettings.json`:
-    * `AppleClientId`
-    * `AppleKeyId`
-    * `AppleTeamId`
+      * `AppleClientId`
+      * `AppleKeyId`
+      * `AppleTeamId`
   1. Deploy the application to the hosting environment for the domain where you wish to use _Sign in with Apple_.
   1. Verify the domain in the [Apple Developer Portal](https://developer.apple.com/account/).
 
