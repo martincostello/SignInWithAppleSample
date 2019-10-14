@@ -10,9 +10,7 @@ This repository contains a sample implementation of [_Sign in with Apple_](https
 
 _Sign in with Apple_ is a way of allowing users of websites to sign in using their Apple ID.
 
-This example integration shows a minimal sample of how to integrate _Sign in with Apple_ a website to authenticate a user using their Apple ID and retrieve their email address (or a relay address to it) and their name*.
-
-_*Retrieving the user's email and name is not yet implemented._
+This example integration shows a minimal sample of how to integrate _Sign in with Apple_ a website to authenticate a user using their Apple ID and retrieve their email address (or a relay address to it) and their name.
 
 ## Setup
 
