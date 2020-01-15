@@ -34,7 +34,7 @@ You should now be able to sign in with your Apple ID in the deployed application
 
 ## Local Debugging
 
-You should be able to debug the application in [Visual Studio Code](https://code.visualstudio.com/) or [Visual Studio 2019 (16.1 or later)](https://www.visualstudio.com/downloads/).
+You should be able to debug the application in [Visual Studio Code](https://code.visualstudio.com/) or [Visual Studio 2019 (16.4 or later)](https://www.visualstudio.com/downloads/).
 
 ## Azure App Service Deployment
 
