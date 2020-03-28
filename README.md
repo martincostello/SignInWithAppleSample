@@ -1,8 +1,6 @@
 # _Sign in with Apple_ Example Integration
 
-| | Linux/macOS | Windows |
-|:-:|:-:|:-:|
-| **Build Status** | [![Build status](https://img.shields.io/travis/com/martincostello/SignInWithAppleSample/master.svg)](https://travis-ci.com/martincostello/SignInWithAppleSample) | [![Build status](https://img.shields.io/appveyor/ci/martincostello/signinwithapplesample/master.svg)](https://ci.appveyor.com/project/martincostello/signinwithapplesample) |
+[![Build status](https://github.com/martincostello/SignInWithAppleSample/workflows/build/badge.svg?branch=master&event=push)](https://github.com/martincostello/SignInWithAppleSample/actions?query=workflow%3Abuild+branch%3Amaster+event%3Apush)
 
 This repository contains a sample implementation of [_Sign in with Apple_](https://developer.apple.com/sign-in-with-apple/) for ASP.NET Core 3.1 written in C#.
 
@@ -40,10 +38,10 @@ You should be able to debug the application in [Visual Studio Code](https://code
 
 If you are deploying the sample application to a Microsoft Azure App Service Web App, you will need to make the following configuration changes to your Web App for the sample application to run correctly:
 
-  * Navigate to the _Application settings_ tab of your Web App and add the following settings:
-    * `WEBSITE_LOAD_USER_PROFILE` to a value of `1`.
-    * Save the changes.
-  * Ensure the hostname you are using (either `{yourappname}.azurewebsites.net` or a custom hostname that you have set up) has been added in the Apple Developer portal to your service id and you've added the Apple Developer domain validation file as described in the _Setup_ section above.
+* Navigate to the _Application settings_ tab of your Web App and add the following settings:
+  * `WEBSITE_LOAD_USER_PROFILE` to a value of `1`.
+  * Save the changes.
+* Ensure the hostname you are using (either `{yourappname}.azurewebsites.net` or a custom hostname that you have set up) has been added in the Apple Developer portal to your service id and you've added the Apple Developer domain validation file as described in the _Setup_ section above.
 
 ## Feedback
 
@@ -55,6 +53,6 @@ This project is licensed under the [Apache 2.0](https://github.com/martincostell
 
 ## External Links
 
-  * [Sign in with Apple](https://developer.apple.com/sign-in-with-apple/)
-  * [Apple Developer Portal](https://developer.apple.com/account/)
-  * [Prototyping Sign in with Apple for ASP.NET Core](https://blog.martincostello.com/sign-in-with-apple-prototype-for-aspnet-core/)
+* [Sign in with Apple](https://developer.apple.com/sign-in-with-apple/)
+* [Apple Developer Portal](https://developer.apple.com/account/)
+* [Prototyping Sign in with Apple for ASP.NET Core](https://blog.martincostello.com/sign-in-with-apple-prototype-for-aspnet-core/)

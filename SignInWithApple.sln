@@ -32,6 +32,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEM
 		.github\ISSUE_TEMPLATE\feature_request.md = .github\ISSUE_TEMPLATE\feature_request.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{62433B4F-5784-4B69-BC9F-1535255BCF2E}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +55,7 @@ Global
 		{4CFD067B-FD1A-4303-9322-3138E9104B1F} = {ABF2B260-1BAE-45CD-9348-C163CA02ECA3}
 		{A4EFB4F4-BC05-4A67-89AC-4D7D21B71D4E} = {C697BCC9-C4F9-4AD8-8336-E90A239865DE}
 		{4D68E909-2E60-46AC-A0EA-39B0696AA65B} = {A4EFB4F4-BC05-4A67-89AC-4D7D21B71D4E}
+		{62433B4F-5784-4B69-BC9F-1535255BCF2E} = {A4EFB4F4-BC05-4A67-89AC-4D7D21B71D4E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8797D09A-407D-424A-A8F0-22FB26F0650C}
