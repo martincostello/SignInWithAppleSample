@@ -2,6 +2,8 @@
 
 [![Build status](https://github.com/martincostello/SignInWithAppleSample/workflows/build/badge.svg?branch=master&event=push)](https://github.com/martincostello/SignInWithAppleSample/actions?query=workflow%3Abuild+branch%3Amaster+event%3Apush)
 
+[![Deploy status](https://github.com/martincostello/SignInWithAppleSample/workflows/deploy/badge.svg?branch=deploy&event=push)](https://github.com/martincostello/SignInWithAppleSample/actions?query=workflow%3Adeploy+branch%3Adeploy+event%3Apush)
+
 This repository contains a sample implementation of [_Sign in with Apple_](https://developer.apple.com/sign-in-with-apple/) for ASP.NET Core 3.1 written in C#.
 
 ## Overview
