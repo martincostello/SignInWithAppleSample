@@ -3,15 +3,12 @@ name: deploy
 on:
   push:
     branches: [ deploy ]
-
-env:
-  AZURE_WEBAPP_NAME: signinwithapple
-  AZURE_WEBAPP_PACKAGE_PATH: './artifacts/signinwithapple'
-  DOTNET_VERSION: '3.1.201'
+  pull_request:
+    branches: [ master ]
 
 jobs:
   deploy:
-    name: ${{ env.AZURE_WEBAPP_NAME }}
+    name: signinwithapple
     runs-on: windows-latest
 
     steps:
@@ -22,11 +19,11 @@ jobs:
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+        dotnet-version: 3.1.201
 
     - name: Build and Publish
       shell: pwsh
-      run: ./build.ps1 -OutputPath '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+      run: ./build.ps1 -OutputPath './artifacts/signinwithapple'
       env:
         DOTNET_CLI_TELEMETRY_OPTOUT: true
         DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
@@ -35,6 +32,6 @@ jobs:
     - name: 'Deploy to Azure App Service'
       uses: azure/webapps-deploy@v2
       with: 
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+        app-name: signinwithapple
+        package: './artifacts/signinwithapple'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }}
