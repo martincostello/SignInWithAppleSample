@@ -5,12 +5,13 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+$ProgressPreference = "SilentlyContinue"
 
 $solutionPath = Split-Path $MyInvocation.MyCommand.Definition
 $solutionFile = Join-Path $solutionPath "SignInWithApple.sln"
 $sdkFile = Join-Path $solutionPath "global.json"
 
-$dotnetVersion = (Get-Content $sdkFile | ConvertFrom-Json).sdk.version
+$dotnetVersion = (Get-Content $sdkFile | Out-String | ConvertFrom-Json).sdk.version
 
 if ($OutputPath -eq "") {
     $OutputPath = Join-Path "$(Convert-Path "$PSScriptRoot")" "artifacts"
@@ -44,16 +45,29 @@ if ($installDotNetSdk -eq $true) {
         if (!(Test-Path $env:DOTNET_INSTALL_DIR)) {
             mkdir $env:DOTNET_INSTALL_DIR | Out-Null
         }
-        $installScript = Join-Path $env:DOTNET_INSTALL_DIR "install.ps1"
-        Invoke-WebRequest "https://dot.net/v1/dotnet-install.ps1" -OutFile $installScript -UseBasicParsing
-        & $installScript -Version "$dotnetVersion" -InstallDir "$env:DOTNET_INSTALL_DIR" -NoPath
-    }
+        [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor "Tls12"
 
-    $env:PATH = "$env:DOTNET_INSTALL_DIR;$env:PATH"
-    $dotnet = Join-Path "$env:DOTNET_INSTALL_DIR" "dotnet"
+        if (($PSVersionTable.PSVersion.Major -ge 6) -And !$IsWindows) {
+            $installScript = Join-Path $env:DOTNET_INSTALL_DIR "install.sh"
+            Invoke-WebRequest "https://dot.net/v1/dotnet-install.sh" -OutFile $installScript -UseBasicParsing
+            chmod +x $installScript
+            & $installScript --version "$dotnetVersion" --install-dir "$env:DOTNET_INSTALL_DIR" --no-path
+        }
+        else {
+            $installScript = Join-Path $env:DOTNET_INSTALL_DIR "install.ps1"
+            Invoke-WebRequest "https://dot.net/v1/dotnet-install.ps1" -OutFile $installScript -UseBasicParsing
+            & $installScript -Version "$dotnetVersion" -InstallDir "$env:DOTNET_INSTALL_DIR" -NoPath
+        }
+    }
 }
 else {
-    $dotnet = "dotnet"
+    $env:DOTNET_INSTALL_DIR = Split-Path -Path (Get-Command dotnet).Path
+}
+
+$dotnet = Join-Path "$env:DOTNET_INSTALL_DIR" "dotnet"
+
+if ($installDotNetSdk -eq $true) {
+    $env:PATH = "$env:DOTNET_INSTALL_DIR;$env:PATH"
 }
 
 Write-Host "Publishing solution..." -ForegroundColor Green
