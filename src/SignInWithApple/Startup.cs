@@ -36,6 +36,7 @@ namespace MartinCostello.SignInWithApple
                 })
                 .AddApple(options =>
                 {
+                    options.AccessDeniedPath = "/denied";
                     options.ClientId = Configuration["AppleClientId"];
                     options.KeyId = Configuration["AppleKeyId"];
                     options.TeamId = Configuration["AppleTeamId"];

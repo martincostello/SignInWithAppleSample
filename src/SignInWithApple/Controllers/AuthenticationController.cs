@@ -10,6 +10,10 @@ namespace MartinCostello.SignInWithApple.Controllers
 {
     public class AuthenticationController : Controller
     {
+        [HttpGet("~/denied")]
+        public IActionResult Denied()
+            => Redirect("/?denied=true");
+
         [HttpPost("~/signin")]
         public IActionResult SignIn()
             => Challenge(new AuthenticationProperties { RedirectUri = "/" }, AppleAuthenticationDefaults.AuthenticationScheme);
