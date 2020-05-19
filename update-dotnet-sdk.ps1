@@ -122,7 +122,7 @@ function Get-Latest-SDK-Version([string] $FileName) {
     return $Version
 }
 
-function Get-Latest-Runtime-Version([string] $FileName, [string] $SdkVersion) {
+function Get-Latest-Runtime-Version([string] $FileName, [string] $SdkVersion, [bool] $AllowNull = $false) {
 
     if (-Not (Test-Path $FileName)) {
         throw "Unable to find '$FileName'"
@@ -149,14 +149,27 @@ function Get-Latest-Runtime-Version([string] $FileName, [string] $SdkVersion) {
             }
         }
         catch {
-            throw "Unable to parse the releases node in '$FileName'"
+            throw "Unable to parse the releases sdk node in '$FileName'"
+        }
+
+        if ($null -eq $Version) {
+            try {
+                $JsonContent | ForEach-Object {
+                    if ($_.sdks.version -eq $SdkVersion) {
+                        $Version = $_.sdks."runtime-version"
+                    }
+                }
+            }
+            catch {
+                throw "Unable to parse the releases sdks node in '$FileName'"
+            }
         }
     }
     else {
         throw "Unable to find the releases node in '$FileName'"
     }
 
-    if ($null -eq $Version) {
+    if (($null -eq $Version) -And ($AllowNull -eq $false)) {
         throw "Unable to find the releases node in '$FileName' for SDK version $SdkVersion"
     }
 
@@ -210,7 +223,12 @@ finally {
 
 $LatestSDKVersion = Get-Latest-SDK-Version $ReleaseNotesPath
 $LatestRuntimeVersion = Get-Latest-Runtime-Version $ReleaseNotesPath $LatestSDKVersion
-$CurrentRuntimeVersion = Get-Latest-Runtime-Version $ReleaseNotesPath $CurrentSDKVersion
+$CurrentRuntimeVersion = Get-Latest-Runtime-Version $ReleaseNotesPath $CurrentSDKVersion -AllowNull ($LatestSDKVersion -lt $CurrentSDKVersion)
+
+if ($null -eq $CurrentRuntimeVersion) {
+    Say "Unable to determine runtime version for .NET SDK version $CurrentSDKVersion."
+    return
+}
 
 Say "Latest .NET SDK version for channel '$Channel' is $LatestSDKVersion (runtime version $LatestRuntimeVersion)"
 
