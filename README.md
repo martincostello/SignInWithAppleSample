@@ -1,6 +1,6 @@
 # _Sign in with Apple_ Example Integration
 
-[![Build status](https://github.com/martincostello/SignInWithAppleSample/workflows/build/badge.svg?branch=master&event=push)](https://github.com/martincostello/SignInWithAppleSample/actions?query=workflow%3Abuild+branch%3Amaster+event%3Apush)
+[![Build status](https://github.com/martincostello/SignInWithAppleSample/workflows/build/badge.svg?branch=main&event=push)](https://github.com/martincostello/SignInWithAppleSample/actions?query=workflow%3Abuild+branch%3Amain+event%3Apush)
 
 [![Deploy status](https://github.com/martincostello/SignInWithAppleSample/workflows/deploy/badge.svg?branch=deploy&event=push)](https://github.com/martincostello/SignInWithAppleSample/actions?query=workflow%3Adeploy+branch%3Adeploy+event%3Apush)
 
@@ -51,7 +51,7 @@ Any feedback or issues can be added to the [issues](https://github.com/martincos
 
 ## License
 
-This project is licensed under the [Apache 2.0](https://github.com/martincostello/SignInWithAppleSample/blob/master/LICENSE) license.
+This project is licensed under the [Apache 2.0](https://github.com/martincostello/SignInWithAppleSample/blob/main/LICENSE) license.
 
 ## External Links
 
