@@ -35,7 +35,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{62433B4F-5784-4B69-BC9F-1535255BCF2E}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
 		.github\workflows\deploy.yml = .github\workflows\deploy.yml
+		.github\workflows\linter.yml = .github\workflows\linter.yml
+		.github\workflows\update-dotnet-sdk.yml = .github\workflows\update-dotnet-sdk.yml
 	EndProjectSection
 EndProject
 Global
