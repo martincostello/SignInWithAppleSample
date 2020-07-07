@@ -18,7 +18,7 @@
     <VersionPrefix>1.0.0</VersionPrefix>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="3.1.2-preview.20356.61" />
+    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="3.1.2-preview.20357.67" />
     <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="3.1.5" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>
