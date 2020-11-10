@@ -20,7 +20,7 @@ namespace MartinCostello.SignInWithApple.Controllers
 
         [HttpGet("~/signout")]
         [HttpPost("~/signout")]
-        public IActionResult SignOut()
+        public IActionResult SignOutCurrentUser()
             => SignOut(new AuthenticationProperties { RedirectUri = "/" }, CookieAuthenticationDefaults.AuthenticationScheme);
     }
 }

@@ -6,7 +6,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceRoot}/src/SignInWithApple/bin/Debug/netcoreapp3.1/MartinCostello.SignInWithApple.dll",
+      "program": "${workspaceRoot}/src/SignInWithApple/bin/Debug/net5.0/MartinCostello.SignInWithApple.dll",
       "args": [],
       "cwd": "${workspaceRoot}/src/SignInWithApple",
       "stopAtEntry": false,
