@@ -2,7 +2,7 @@
 
 [![Build status](https://github.com/martincostello/SignInWithAppleSample/workflows/build/badge.svg?branch=main&event=push)](https://github.com/martincostello/SignInWithAppleSample/actions?query=workflow%3Abuild+branch%3Amain+event%3Apush)
 
-This repository contains a sample implementation of [_Sign in with Apple_](https://developer.apple.com/sign-in-with-apple/) for ASP.NET 5.0 written in C#.
+This repository contains a sample implementation of [_Sign in with Apple_](https://developer.apple.com/sign-in-with-apple/) for ASP.NET 6 written in C#.
 
 ## Overview
 
@@ -14,7 +14,7 @@ This example integration shows a minimal sample of how to integrate _Sign in wit
 
 To setup the repository to run the sample, perform the steps below:
 
-  1. Install the [.NET Core SDK](https://www.microsoft.com/net/download/core), Visual Studio or Visual Studio Code version compatible with .NET 5.0.
+  1. Install the [.NET Core SDK](https://www.microsoft.com/net/download/core), Visual Studio or Visual Studio Code version compatible with .NET 6.
   1. Fork this repository.
   1. Clone the repository from your fork to your local machine: `git clone https://github.com/{username}/SignInWithAppleSample.git`
   1. [Follow the steps](https://developer.okta.com/blog/2019/06/04/what-the-heck-is-sign-in-with-apple#how-sign-in-with-apple-works-hint-it-uses-oauth-and-oidc) to obtain your _Client ID_, _Private Key_, _Key ID_ and Domain Verification file, if you do not already have them.
