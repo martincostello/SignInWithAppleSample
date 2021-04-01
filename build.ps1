@@ -4,9 +4,6 @@ param(
     [Parameter(Mandatory = $false)][string] $OutputPath = ""
 )
 
-$ErrorActionPreference = "Stop"
-$ProgressPreference = "SilentlyContinue"
-
 $solutionPath = Split-Path $MyInvocation.MyCommand.Definition
 $solutionFile = Join-Path $solutionPath "SignInWithApple.sln"
 $sdkFile = Join-Path $solutionPath "global.json"
