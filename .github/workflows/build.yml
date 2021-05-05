@@ -55,6 +55,7 @@ jobs:
     name: deploy-production
     needs: build
     runs-on: windows-latest
+    concurrency: production_environment
     environment:
       name: production
       url: ${{ steps.deploy_production.outputs.webapp-url }}
