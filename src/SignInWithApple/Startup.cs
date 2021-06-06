@@ -1,6 +1,9 @@
 // Copyright (c) Martin Costello, 2019. All rights reserved.
 // Licensed under the Apache 2.0 license. See the LICENSE file in the project root for full license information.
 
+using System;
+using AspNet.Security.OAuth.Apple;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,16 +18,6 @@ namespace MartinCostello.SignInWithApple
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostEnvironment environment)
-        {
-            Configuration = configuration;
-            Environment = environment;
-        }
-
-        private IConfiguration Configuration { get; }
-
-        private IHostEnvironment Environment { get; }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services
@@ -34,25 +27,45 @@ namespace MartinCostello.SignInWithApple
                     options.LoginPath = "/signin";
                     options.LogoutPath = "/signout";
                 })
-                .AddApple(options =>
+                .AddApple();
+
+            // Configuration for the Sign in with Apple provider is applied separately so
+            // that any configuration loaded externally, such as from Azure Key Vault, is
+            // available at the point that the authentication configuration is validated.
+            services
+                .AddOptions<AppleAuthenticationOptions>(AppleAuthenticationDefaults.AuthenticationScheme)
+                .Configure<IConfiguration, IServiceProvider>((options, configuration, serviceProvider) =>
                 {
                     options.AccessDeniedPath = "/denied";
-                    options.ClientId = Configuration["AppleClientId"];
-                    options.KeyId = Configuration["AppleKeyId"];
-                    options.TeamId = Configuration["AppleTeamId"];
+                    options.ClientId = configuration["Apple:ClientId"];
+                    options.KeyId = configuration["Apple:KeyId"];
+                    options.TeamId = configuration["Apple:TeamId"];
 
-                    options.UsePrivateKey(
-                        (keyId) =>
-                            Environment.ContentRootFileProvider.GetFileInfo($"AuthKey_{keyId}.p8"));
+                    var client = serviceProvider.GetService<SecretClient>();
+
+                    if (client is not null)
+                    {
+                        // Load the private key from Azure Key Vault if available
+                        options.UseAzureKeyVaultSecret(
+                            (keyId) => client.GetSecretAsync($"AuthKey-{keyId}"));
+                    }
+                    else
+                    {
+                        // Otherwise assume the private key is stored locally on disk
+                        var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+
+                        options.UsePrivateKey(
+                            (keyId) =>
+                                environment.ContentRootFileProvider.GetFileInfo($"AuthKey_{keyId}.p8"));
+                    }
                 });
 
-            services.AddMvc(options => options.Filters.Add(new RequireHttpsAttribute()))
-                    .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc(options => options.Filters.Add(new RequireHttpsAttribute()));
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IHostEnvironment environment)
         {
-            if (Environment.IsDevelopment())
+            if (environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 IdentityModelEventSource.ShowPII = true;
@@ -63,7 +76,7 @@ namespace MartinCostello.SignInWithApple
                    .UseStatusCodePages();
             }
 
-            if (Environment.IsProduction())
+            if (environment.IsProduction())
             {
                 app.UseHsts()
                    .UseHttpsRedirection();
