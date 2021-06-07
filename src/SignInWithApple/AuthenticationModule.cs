@@ -48,7 +48,7 @@ namespace MartinCostello.SignInWithApple
                     {
                         // Load the private key from Azure Key Vault if available
                         options.UseAzureKeyVaultSecret(
-                            (keyId) => client.GetSecretAsync($"AuthKey-{keyId}"));
+                            (keyId, cancellationToken) => client.GetSecretAsync($"AuthKey-{keyId}", cancellationToken: cancellationToken));
                     }
                     else
                     {
