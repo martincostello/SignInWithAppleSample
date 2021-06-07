@@ -12,6 +12,8 @@ using Microsoft.IdentityModel.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.TryConfigureAzureKeyVault();
+
 builder.Services.AddSignInWithApple();
 builder.Services.AddMvc(options => options.Filters.Add(new RequireHttpsAttribute()));
 
