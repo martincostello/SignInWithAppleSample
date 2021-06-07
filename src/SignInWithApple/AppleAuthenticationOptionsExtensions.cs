@@ -2,6 +2,7 @@
 // Licensed under the Apache 2.0 license. See the LICENSE file in the project root for full license information.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using AspNet.Security.OAuth.Apple;
 using Azure;
@@ -27,12 +28,12 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </returns>
         public static AppleAuthenticationOptions UseAzureKeyVaultSecret(
             this AppleAuthenticationOptions options,
-            Func<string, Task<Response<KeyVaultSecret>>> secretProvider)
+            Func<string, CancellationToken, Task<Response<KeyVaultSecret>>> secretProvider)
         {
             options.GenerateClientSecret = true;
-            options.PrivateKeyBytes = async (keyId) =>
+            options.PrivateKeyBytes = async (keyId, cancellationToken) =>
             {
-                var secret = await secretProvider(keyId);
+                var secret = await secretProvider(keyId, cancellationToken);
 
                 string privateKey = secret.Value.Value;
 
