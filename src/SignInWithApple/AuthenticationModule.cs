@@ -1,8 +1,10 @@
 // Copyright (c) Martin Costello, 2019. All rights reserved.
 // Licensed under the Apache 2.0 license. See the LICENSE file in the project root for full license information.
 
+using System;
 using System.Threading.Tasks;
 using AspNet.Security.OAuth.Apple;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -33,16 +35,30 @@ namespace MartinCostello.SignInWithApple
                 .AddApple()
                 .Services
                 .AddOptions<AppleAuthenticationOptions>(AppleAuthenticationDefaults.AuthenticationScheme)
-                .Configure<IConfiguration, IHostEnvironment>((options, configuration, environment) =>
+                .Configure<IConfiguration, IServiceProvider>((options, configuration, serviceProvider) =>
                 {
                     options.AccessDeniedPath = DeniedPath;
-                    options.ClientId = configuration["AppleClientId"];
-                    options.KeyId = configuration["AppleKeyId"];
-                    options.TeamId = configuration["AppleTeamId"];
+                    options.ClientId = configuration["Apple:ClientId"];
+                    options.KeyId = configuration["Apple:KeyId"];
+                    options.TeamId = configuration["Apple:TeamId"];
 
-                    options.UsePrivateKey(
-                        keyId =>
-                            environment.ContentRootFileProvider.GetFileInfo($"AuthKey_{keyId}.p8"));
+                    var client = serviceProvider.GetService<SecretClient>();
+
+                    if (client is not null)
+                    {
+                        // Load the private key from Azure Key Vault if available
+                        options.UseAzureKeyVaultSecret(
+                            (keyId) => client.GetSecretAsync($"AuthKey-{keyId}"));
+                    }
+                    else
+                    {
+                        // Otherwise assume the private key is stored locally on disk
+                        var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
+
+                        options.UsePrivateKey(
+                            (keyId) =>
+                                environment.ContentRootFileProvider.GetFileInfo($"AuthKey_{keyId}.p8"));
+                    }
                 })
                 .Services;
         }
