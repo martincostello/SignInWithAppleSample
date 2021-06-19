@@ -28,10 +28,10 @@ else
 {
     app.UseExceptionHandler("/Home/Error")
        .UseStatusCodePages();
-
-    app.UseHsts()
-       .UseHttpsRedirection();
 }
+
+app.UseHsts()
+   .UseHttpsRedirection();
 
 var provider = new FileExtensionContentTypeProvider();
 provider.Mappings[".webmanifest"] = "application/manifest+json";
