@@ -21,7 +21,7 @@
     <PackageReference Include="AspNet.Security.OAuth.Apple" Version="5.0.8" />
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.1" />
     <PackageReference Include="Azure.Identity" Version="1.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="5.0.8" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
   </ItemGroup>
   <Target Name="AddGeneratedContentItems" BeforeTargets="AssignTargetPaths">
