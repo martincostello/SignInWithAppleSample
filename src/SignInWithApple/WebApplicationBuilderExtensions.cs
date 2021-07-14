@@ -5,42 +5,38 @@ using System;
 using Azure.Core;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace MartinCostello.SignInWithApple
 {
-    internal static class IHostBuilderExtensions
+    internal static class WebApplicationBuilderExtensions
     {
-        public static IHostBuilder TryConfigureAzureKeyVault(this IHostBuilder builder)
+        public static WebApplicationBuilder TryConfigureAzureKeyVault(this WebApplicationBuilder builder)
         {
-            builder.ConfigureAppConfiguration((context, builder) =>
-            {
-                // Build the configuration so far, this ensures things like user secrets are available
-                IConfiguration config = builder.Build();
+            // Build the configuration so far, this ensures things like user secrets are available
+            IConfiguration config = (builder.Configuration as IConfigurationBuilder)
+                .AddUserSecrets("MartinCostello.SignInWithApple") // TODO Not needed with .NET 5 - should it be in .NET 6?
+                .Build();
 
-                if (TryGetVaultUri(config, out Uri vaultUri))
+            if (TryGetVaultUri(config, out Uri vaultUri))
+            {
+                TokenCredential credential = CreateCredential(config);
+                builder.Configuration.AddAzureKeyVault(vaultUri, credential);
+            }
+
+            builder.Services.AddSingleton((provider) =>
+            {
+                var config = provider.GetRequiredService<IConfiguration>();
+
+                if (!TryGetVaultUri(config, out Uri vaultUri))
                 {
-                    TokenCredential credential = CreateCredential(config);
-                    builder.AddAzureKeyVault(vaultUri, credential);
+                    return null;
                 }
-            });
 
-            builder.ConfigureServices((services) =>
-            {
-                services.AddSingleton((provider) =>
-                {
-                    var config = provider.GetRequiredService<IConfiguration>();
-
-                    if (!TryGetVaultUri(config, out Uri vaultUri))
-                    {
-                        return null;
-                    }
-
-                    TokenCredential credential = CreateCredential(config);
-                    return new SecretClient(vaultUri, credential);
-                });
+                TokenCredential credential = CreateCredential(config);
+                return new SecretClient(vaultUri, credential);
             });
 
             return builder;
