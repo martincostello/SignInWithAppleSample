@@ -21,7 +21,11 @@
                     }
                 </p>
 
-                <a class="btn btn-lg btn-danger" href="/signout?returnUrl=%2F">Sign out</a>
+				<form action="/signout" method="post">
+                    <button class="btn btn-lg btn-danger" type="submit">
+                        Sign out
+                    </button>
+                </form>
             }
             else
             {
