@@ -34,7 +34,7 @@ app.UseStaticFiles(new StaticFileOptions
 {
     ContentTypeProvider = provider,
     DefaultContentType = "application/json",
-    ServeUnknownFileTypes = true, // Required to serve the files in the .well-known folder
+    ServeUnknownFileTypes = true // Required to serve the files in the .well-known folder
 });
 
 app.UseRouting();

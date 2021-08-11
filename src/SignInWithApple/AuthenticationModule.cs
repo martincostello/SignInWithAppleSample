@@ -3,7 +3,6 @@
 
 using AspNet.Security.OAuth.Apple;
 using Azure.Security.KeyVault.Secrets;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MartinCostello.SignInWithApple
@@ -48,7 +47,7 @@ namespace MartinCostello.SignInWithApple
                         var environment = serviceProvider.GetRequiredService<IHostEnvironment>();
 
                         options.UsePrivateKey(
-                            (keyId) =>
+                            keyId =>
                                 environment.ContentRootFileProvider.GetFileInfo($"AuthKey_{keyId}.p8"));
                     }
                 })
@@ -57,33 +56,12 @@ namespace MartinCostello.SignInWithApple
 
         public static IEndpointRouteBuilder MapAuthenticationRoutes(this IEndpointRouteBuilder builder)
         {
-            builder.MapGet(DeniedPath, context => context.RedirectAsync(RootPath + "?denied=true"));
-            builder.MapGet(SignOutPath, context => context.RedirectAsync(RootPath));
-
-            builder.MapPost(SignInPath, SignInAsync);
-            builder.MapPost(SignOutPath, SignOutAsync);
+            builder.MapGet(DeniedPath, () => Results.Redirect(RootPath + "?denied=true"));
+            builder.MapGet(SignOutPath, () => Results.Redirect(RootPath));
+            builder.MapPost(SignInPath, () => Results.Challenge(new() { RedirectUri = RootPath }, new[] { AppleAuthenticationDefaults.AuthenticationScheme }));
+            builder.MapPost(SignOutPath, () => Results.SignOut(new() { RedirectUri = RootPath }, new[] { CookieAuthenticationDefaults.AuthenticationScheme }));
 
             return builder;
-        }
-
-        private static async Task SignInAsync(HttpContext context)
-        {
-            await context.ChallengeAsync(
-                AppleAuthenticationDefaults.AuthenticationScheme,
-                new AuthenticationProperties { RedirectUri = RootPath });
-        }
-
-        private static async Task SignOutAsync(HttpContext context)
-        {
-            await context.SignOutAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new AuthenticationProperties { RedirectUri = RootPath });
-        }
-
-        private static Task RedirectAsync(this HttpContext context, string location)
-        {
-            context.Response.Redirect(location);
-            return Task.CompletedTask;
         }
     }
 }
