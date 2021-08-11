@@ -1,13 +1,9 @@
 // Copyright (c) Martin Costello, 2019. All rights reserved.
 // Licensed under the Apache 2.0 license. See the LICENSE file in the project root for full license information.
 
-using System;
 using Azure.Core;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace MartinCostello.SignInWithApple
 {
@@ -15,14 +11,9 @@ namespace MartinCostello.SignInWithApple
     {
         public static WebApplicationBuilder TryConfigureAzureKeyVault(this WebApplicationBuilder builder)
         {
-            // Build the configuration so far, this ensures things like user secrets are available
-            IConfiguration config = (builder.Configuration as IConfigurationBuilder)
-                .AddUserSecrets("MartinCostello.SignInWithApple") // TODO Not needed with .NET 5 - should it be in .NET 6?
-                .Build();
-
-            if (TryGetVaultUri(config, out Uri vaultUri))
+            if (TryGetVaultUri(builder.Configuration, out Uri vaultUri))
             {
-                TokenCredential credential = CreateCredential(config);
+                TokenCredential credential = CreateCredential(builder.Configuration);
                 builder.Configuration.AddAzureKeyVault(vaultUri, credential);
             }
 
