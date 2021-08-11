@@ -21,7 +21,7 @@
                     }
                 </p>
 
-				<form action="/signout" method="post">
+				<form action="/signout" method="post" asp-antiforgery="true">
                     <button class="btn btn-lg btn-danger" type="submit">
                         Sign out
                     </button>
@@ -32,7 +32,7 @@
                 <p class="text-justify">
                     Click the button below to sign into this sample application with your Apple ID.
                 </p>
-                <form action="/signin" method="post">
+                <form action="/signin" method="post" asp-antiforgery="true">
                     <button class="btn btn-lg btn-dark m-1 sign-in-with-apple" type="submit">
                         Sign in with Apple
                     </button>

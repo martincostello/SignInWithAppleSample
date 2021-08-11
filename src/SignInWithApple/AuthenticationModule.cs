@@ -3,6 +3,7 @@
 
 using AspNet.Security.OAuth.Apple;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MartinCostello.SignInWithApple
@@ -58,8 +59,30 @@ namespace MartinCostello.SignInWithApple
         {
             builder.MapGet(DeniedPath, () => Results.Redirect(RootPath + "?denied=true"));
             builder.MapGet(SignOutPath, () => Results.Redirect(RootPath));
-            builder.MapPost(SignInPath, () => Results.Challenge(new() { RedirectUri = RootPath }, new[] { AppleAuthenticationDefaults.AuthenticationScheme }));
-            builder.MapPost(SignOutPath, () => Results.SignOut(new() { RedirectUri = RootPath }, new[] { CookieAuthenticationDefaults.AuthenticationScheme }));
+
+            builder.MapPost(SignInPath, async (HttpContext context, IAntiforgery antiforgery) =>
+            {
+                if (!await antiforgery.IsRequestValidAsync(context))
+                {
+                    return Results.Redirect(RootPath);
+                }
+
+                return Results.Challenge(
+                    new() { RedirectUri = RootPath },
+                    new[] { AppleAuthenticationDefaults.AuthenticationScheme });
+            });
+
+            builder.MapPost(SignOutPath, async (HttpContext context, IAntiforgery antiforgery) =>
+            {
+                if (!await antiforgery.IsRequestValidAsync(context))
+                {
+                    return Results.Redirect(RootPath);
+                }
+
+                return Results.SignOut(
+                    new() { RedirectUri = RootPath },
+                    new[] { CookieAuthenticationDefaults.AuthenticationScheme });
+            });
 
             return builder;
         }
