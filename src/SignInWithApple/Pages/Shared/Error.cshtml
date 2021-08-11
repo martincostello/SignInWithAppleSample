@@ -1,0 +1,12 @@
+@page "/error"
+@model ErrorModel
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred. Sorry about that.</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
