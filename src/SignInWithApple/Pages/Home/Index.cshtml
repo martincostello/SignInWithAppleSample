@@ -1,3 +1,6 @@
+@page "/"
+@model IndexModel
+
 <div class="container">
     <div class="card">
         <div class="card-header">
@@ -10,7 +13,7 @@
             @if (User?.Identity?.IsAuthenticated ?? false)
             {
                 <p class="text-justify">
-                    @foreach (var claim in Context.User.Claims)
+                    @foreach (var claim in User.Claims)
                     {
                         <div>
                             <code>@claim.Type</code>: <strong>@claim.Value</strong> (<code>@claim.Issuer</code>)

@@ -2,7 +2,6 @@
 // Licensed under the Apache 2.0 license. See the LICENSE file in the project root for full license information.
 
 using MartinCostello.SignInWithApple;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.IdentityModel.Logging;
 
@@ -10,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.TryConfigureAzureKeyVault();
 
+builder.Services.AddRazorPages();
 builder.Services.AddSignInWithApple();
-builder.Services.AddMvc(options => options.Filters.Add(new RequireHttpsAttribute()));
 
 var app = builder.Build();
 
@@ -21,12 +20,12 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error")
+    app.UseExceptionHandler("/error")
        .UseStatusCodePages();
 }
 
-app.UseHsts()
-   .UseHttpsRedirection();
+app.UseHsts();
+app.UseHttpsRedirection();
 
 var provider = new FileExtensionContentTypeProvider();
 provider.Mappings[".webmanifest"] = "application/manifest+json";
@@ -43,10 +42,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapDefaultControllerRoute();
-    endpoints.MapAuthenticationRoutes();
-});
+app.MapAuthenticationRoutes();
+app.MapRazorPages();
 
 app.Run();
