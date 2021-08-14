@@ -1,0 +1,20 @@
+{
+  "name": "C# (.NET)",
+  "extensions": [
+    "editorconfig.editorconfig",
+    "ms-dotnettools.csharp",
+    "ms-vscode.PowerShell"
+  ],
+  "forwardPorts": [ 5000 ],
+  "portsAttributes":{
+    "5000": {
+      "label": "Website",
+      "onAutoForward": "openBrowserOnce",
+      "protocol": "http"
+    }
+  },
+  "postCreateCommand": "./build.ps1",
+  "remoteEnv": {
+    "PATH": "/root/.dotnet/tools:${containerWorkspaceFolder}/.dotnetcli:${containerEnv:PATH}"
+  }
+}

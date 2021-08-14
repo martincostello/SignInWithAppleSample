@@ -6,30 +6,20 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceRoot}/src/SignInWithApple/bin/Debug/net5.0/MartinCostello.SignInWithApple.dll",
+      "program": "${workspaceFolder}/src/SignInWithApple/bin/Debug/net5.0/MartinCostello.SignInWithApple.dll",
       "args": [],
-      "cwd": "${workspaceRoot}/src/SignInWithApple",
+      "cwd": "${workspaceFolder}/src/SignInWithApple",
       "stopAtEntry": false,
       "internalConsoleOptions": "openOnSessionStart",
-      "launchBrowser": {
-        "enabled": true,
-        "args": "https://localhost:5001",
-        "windows": {
-          "command": "cmd.exe",
-          "args": "/C start https://localhost:5001"
-        },
-        "osx": {
-          "command": "open"
-        },
-        "linux": {
-          "command": "xdg-open"
-        }
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
       },
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "sourceFileMap": {
-        "/Views": "${workspaceRoot}/src/SignInWithApple/Views"
+        "/Views": "${workspaceFolder}/src/SignInWithApple/Views"
       }
     }
   ]
