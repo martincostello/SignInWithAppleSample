@@ -5,65 +5,64 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 
-namespace MartinCostello.SignInWithApple
+namespace MartinCostello.SignInWithApple;
+
+internal static class WebApplicationBuilderExtensions
 {
-    internal static class WebApplicationBuilderExtensions
+    public static WebApplicationBuilder TryConfigureAzureKeyVault(this WebApplicationBuilder builder)
     {
-        public static WebApplicationBuilder TryConfigureAzureKeyVault(this WebApplicationBuilder builder)
+        if (TryGetVaultUri(builder.Configuration, out Uri vaultUri))
         {
-            if (TryGetVaultUri(builder.Configuration, out Uri vaultUri))
-            {
-                TokenCredential credential = CreateCredential(builder.Configuration);
-                builder.Configuration.AddAzureKeyVault(vaultUri, credential);
-            }
-
-            builder.Services.AddSingleton((provider) =>
-            {
-                var config = provider.GetRequiredService<IConfiguration>();
-
-                if (!TryGetVaultUri(config, out Uri vaultUri))
-                {
-                    return null;
-                }
-
-                TokenCredential credential = CreateCredential(config);
-                return new SecretClient(vaultUri, credential);
-            });
-
-            return builder;
+            TokenCredential credential = CreateCredential(builder.Configuration);
+            builder.Configuration.AddAzureKeyVault(vaultUri, credential);
         }
 
-        private static bool TryGetVaultUri(IConfiguration configuration, out Uri vaultUri)
+        builder.Services.AddSingleton((provider) =>
         {
-            string vault = configuration["AzureKeyVault:Uri"];
+            var config = provider.GetRequiredService<IConfiguration>();
 
-            if (!string.IsNullOrEmpty(vault) && Uri.TryCreate(vault, UriKind.Absolute, out vaultUri))
+            if (!TryGetVaultUri(config, out Uri vaultUri))
             {
-                return true;
+                return null;
             }
 
-            vaultUri = null;
-            return false;
+            TokenCredential credential = CreateCredential(config);
+            return new SecretClient(vaultUri, credential);
+        });
+
+        return builder;
+    }
+
+    private static bool TryGetVaultUri(IConfiguration configuration, out Uri vaultUri)
+    {
+        string vault = configuration["AzureKeyVault:Uri"];
+
+        if (!string.IsNullOrEmpty(vault) && Uri.TryCreate(vault, UriKind.Absolute, out vaultUri))
+        {
+            return true;
         }
 
-        private static TokenCredential CreateCredential(IConfiguration configuration)
-        {
-            string clientId = configuration["AzureKeyVault:ClientId"];
-            string clientSecret = configuration["AzureKeyVault:ClientSecret"];
-            string tenantId = configuration["AzureKeyVault:TenantId"];
+        vaultUri = null;
+        return false;
+    }
 
-            if (!string.IsNullOrEmpty(clientId) &&
-                !string.IsNullOrEmpty(clientSecret) &&
-                !string.IsNullOrEmpty(tenantId))
-            {
-                // Use explicitly configured Azure Key Vault credentials
-                return new ClientSecretCredential(tenantId, clientId, clientSecret);
-            }
-            else
-            {
-                // Assume Managed Service Identity is configured and available
-                return new ManagedIdentityCredential();
-            }
+    private static TokenCredential CreateCredential(IConfiguration configuration)
+    {
+        string clientId = configuration["AzureKeyVault:ClientId"];
+        string clientSecret = configuration["AzureKeyVault:ClientSecret"];
+        string tenantId = configuration["AzureKeyVault:TenantId"];
+
+        if (!string.IsNullOrEmpty(clientId) &&
+            !string.IsNullOrEmpty(clientSecret) &&
+            !string.IsNullOrEmpty(tenantId))
+        {
+            // Use explicitly configured Azure Key Vault credentials
+            return new ClientSecretCredential(tenantId, clientId, clientSecret);
+        }
+        else
+        {
+            // Assume Managed Service Identity is configured and available
+            return new ManagedIdentityCredential();
         }
     }
 }
