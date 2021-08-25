@@ -19,10 +19,10 @@
     <VersionPrefix>2.0.0</VersionPrefix>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="6.0.0-preview.7.21411.32" />
+    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="6.0.0-preview.7.21424.43" />
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.1" />
     <PackageReference Include="Azure.Identity" Version="1.4.1" />
-    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="6.0.0-rc.1.21420.16" />
+    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="6.0.0-rc.1.21424.21" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
   </ItemGroup>
   <Target Name="AddGeneratedContentItems" BeforeTargets="AssignTargetPaths">
