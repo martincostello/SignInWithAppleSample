@@ -28,19 +28,10 @@ internal static class AppleAuthenticationOptionsExtensions
         Func<string, CancellationToken, Task<Response<KeyVaultSecret>>> secretProvider)
     {
         options.GenerateClientSecret = true;
-        options.PrivateKeyBytes = async (keyId, cancellationToken) =>
+        options.PrivateKey = async (keyId, cancellationToken) =>
         {
             var secret = await secretProvider(keyId, cancellationToken);
-
-            string privateKey = secret.Value.Value;
-
-            if (privateKey.StartsWith("-----BEGIN PRIVATE KEY-----", StringComparison.Ordinal))
-            {
-                string[] lines = privateKey.Split('\n');
-                privateKey = string.Join(string.Empty, lines[1..^1]);
-            }
-
-            return Convert.FromBase64String(privateKey);
+            return secret.Value.Value.AsMemory();
         };
 
         return options;
