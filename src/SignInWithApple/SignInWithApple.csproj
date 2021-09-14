@@ -7,8 +7,6 @@
     <Copyright>Martin Costello (c) $([System.DateTime]::Now.ToString(yyyy))</Copyright>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
-    <!-- HACK Workaround for https://github.com/dotnet/sdk/issues/20444 -->
-    <LangVersion Condition="'$(BuildingInsideVisualStudio)' == 'true'">preview</LangVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
     <OutputType>Exe</OutputType>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
@@ -21,7 +19,7 @@
     <VersionPrefix>2.0.0</VersionPrefix>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="6.0.0-preview.7.21426.32" />
+    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="6.0.0-rc.1.21464.72" />
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.1" />
     <PackageReference Include="Azure.Identity" Version="1.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="6.0.0-rc.1.21452.15" />
