@@ -41,7 +41,7 @@ jobs:
 
     - name: Build and publish
       shell: pwsh
-      run: ./build.ps1
+      run: ./build.ps1 -Runtime win10-x64
 
     - name: Publish artifacts
       uses: actions/upload-artifact@v2
