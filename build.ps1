@@ -1,7 +1,8 @@
 #! /usr/bin/pwsh
 param(
     [Parameter(Mandatory = $false)][string] $Configuration = "Release",
-    [Parameter(Mandatory = $false)][string] $OutputPath = ""
+    [Parameter(Mandatory = $false)][string] $OutputPath = "",
+    [Parameter(Mandatory = $false)][string] $Runtime = ""
 )
 
 $solutionPath = Split-Path $MyInvocation.MyCommand.Definition
@@ -68,7 +69,16 @@ if ($installDotNetSdk -eq $true) {
 }
 
 Write-Host "Publishing solution..." -ForegroundColor Green
-& $dotnet publish $solutionFile --output $OutputPath --configuration $Configuration
+
+$additionalArgs = @()
+
+if (![string]::IsNullOrEmpty($Runtime)) {
+    $additionalArgs += "--self-contained"
+    $additionalArgs += "--runtime"
+    $additionalArgs += $Runtime
+}
+
+& $dotnet publish $solutionFile --output $OutputPath --configuration $Configuration $additionalArgs
 
 if ($LASTEXITCODE -ne 0) {
     throw "dotnet publish failed with exit code $LASTEXITCODE"
