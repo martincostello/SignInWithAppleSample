@@ -19,7 +19,7 @@
     <VersionPrefix>2.0.0</VersionPrefix>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="6.0.0-rc.1.21467.72" />
+    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="6.0.0-rc.1.21472.49" />
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.1" />
     <PackageReference Include="Azure.Identity" Version="1.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="6.0.0-rc.1.21452.15" />
