@@ -44,7 +44,7 @@ jobs:
       run: ./build.ps1 -Runtime win10-x64
 
     - name: Publish artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       if: ${{ runner.os == 'Windows' }}
       with:
         name: webapp
