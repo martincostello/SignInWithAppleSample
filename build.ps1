@@ -7,7 +7,6 @@ param(
 )
 
 $solutionPath = Split-Path $MyInvocation.MyCommand.Definition
-$solutionFile = Join-Path $solutionPath "SignInWithApple.sln"
 $sdkFile = Join-Path $solutionPath "global.json"
 
 $dotnetVersion = (Get-Content $sdkFile | Out-String | ConvertFrom-Json).sdk.version
