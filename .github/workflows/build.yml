@@ -13,10 +13,10 @@ on:
 
 permissions:
   contents: read
-  
+
 env:
   AZURE_WEBAPP_NAME: signinwithapple
-  AZURE_WEBAPP_PACKAGE_PATH: ./artifacts
+  AZURE_WEBAPP_PACKAGE_PATH: ./artifacts/publish
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_GENERATE_ASPNET_CERTIFICATE: false
   DOTNET_MULTILEVEL_LOOKUP: 0
