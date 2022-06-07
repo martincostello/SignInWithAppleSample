@@ -46,3 +46,10 @@ app.MapAuthenticationRoutes();
 app.MapRazorPages();
 
 app.Run();
+
+namespace MartinCostello.SignInWithApple
+{
+    public partial class Program
+    {
+    }
+}
