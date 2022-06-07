@@ -94,5 +94,5 @@ if ($SkipTests -eq $false) {
         $additionalArgs += "GitHubActions;report-warnings=false"
     }
 
-    & $dotnet test $solutionFile --output $OutputPath --configuration $Configuration $additionalArgs
+    & $dotnet test (Join-Path $solutionPath "tests" "SignInWithApple.Tests") --output $OutputPath --configuration $Configuration $additionalArgs
 }
