@@ -11,6 +11,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  
 env:
   AZURE_WEBAPP_NAME: signinwithapple
   AZURE_WEBAPP_PACKAGE_PATH: ./artifacts
@@ -41,7 +44,7 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v2
 
-    - name: Build and publish
+    - name: Build, test and publish
       shell: pwsh
       run: ./build.ps1 -Runtime win10-x64
 

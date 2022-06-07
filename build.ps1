@@ -2,6 +2,7 @@
 param(
     [Parameter(Mandatory = $false)][string] $Configuration = "Release",
     [Parameter(Mandatory = $false)][string] $OutputPath = "",
+    [Parameter(Mandatory = $false)][switch] $SkipTests,
     [Parameter(Mandatory = $false)][string] $Runtime = ""
 )
 
@@ -82,4 +83,16 @@ if (![string]::IsNullOrEmpty($Runtime)) {
 
 if ($LASTEXITCODE -ne 0) {
     throw "dotnet publish failed with exit code $LASTEXITCODE"
+}
+
+if ($SkipTests -eq $false) {
+
+    $additionalArgs = @()
+
+    if (![string]::IsNullOrEmpty($env:GITHUB_SHA)) {
+        $additionalArgs += "--logger"
+        $additionalArgs += "GitHubActions;report-warnings=false"
+    }
+
+    & $dotnet test $solutionFile --output $OutputPath --configuration $Configuration $additionalArgs
 }
