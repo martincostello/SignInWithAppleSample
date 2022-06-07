@@ -79,7 +79,7 @@ if (![string]::IsNullOrEmpty($Runtime)) {
     $additionalArgs += $Runtime
 }
 
-& $dotnet publish $solutionFile --output $OutputPath --configuration $Configuration $additionalArgs
+& $dotnet publish (Join-Path $solutionPath "src" "SignInWithApple") --output $OutputPath --configuration $Configuration $additionalArgs
 
 if ($LASTEXITCODE -ne 0) {
     throw "dotnet publish failed with exit code $LASTEXITCODE"
