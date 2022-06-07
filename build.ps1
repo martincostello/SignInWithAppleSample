@@ -68,6 +68,24 @@ if ($installDotNetSdk -eq $true) {
     $env:PATH = "$env:DOTNET_INSTALL_DIR;$env:PATH"
 }
 
+if ($SkipTests -eq $false) {
+
+    Write-Host "Running tests..." -ForegroundColor Green
+
+    $additionalArgs = @()
+
+    if (![string]::IsNullOrEmpty($env:GITHUB_SHA)) {
+        $additionalArgs += "--logger"
+        $additionalArgs += "GitHubActions;report-warnings=false"
+    }
+
+    & $dotnet test (Join-Path $solutionPath "tests" "SignInWithApple.Tests") --output $OutputPath --configuration $Configuration $additionalArgs
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "dotnet test failed with exit code $LASTEXITCODE"
+    }
+}
+
 Write-Host "Publishing solution..." -ForegroundColor Green
 
 $additionalArgs = @()
@@ -82,16 +100,4 @@ if (![string]::IsNullOrEmpty($Runtime)) {
 
 if ($LASTEXITCODE -ne 0) {
     throw "dotnet publish failed with exit code $LASTEXITCODE"
-}
-
-if ($SkipTests -eq $false) {
-
-    $additionalArgs = @()
-
-    if (![string]::IsNullOrEmpty($env:GITHUB_SHA)) {
-        $additionalArgs += "--logger"
-        $additionalArgs += "GitHubActions;report-warnings=false"
-    }
-
-    & $dotnet test (Join-Path $solutionPath "tests" "SignInWithApple.Tests") --output $OutputPath --configuration $Configuration $additionalArgs
 }
