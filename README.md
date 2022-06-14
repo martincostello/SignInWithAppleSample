@@ -38,6 +38,8 @@ You should be able to debug the application in [Visual Studio Code](https://code
 
 If you are deploying the sample application to a Microsoft Azure App Service Web App, you will need to make the following configuration changes to your Web App for the sample application to run correctly:
 
+> ℹ️ The Free and Shared pricing tiers do not support features required to load the private key. See [the Azure App Service documentation](https://docs.microsoft.com/en-us/azure/app-service/overview-hosting-plans "Azure App Service plan overview") for the the other available pricing tiers.
+
 * Navigate to the _Application settings_ tab of your Web App and add the following settings:
   * `WEBSITE_LOAD_USER_PROFILE` to a value of `1`.
   * Save the changes.
