@@ -9,7 +9,7 @@
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <RootNamespace>MartinCostello.SignInWithApple</RootNamespace>
     <Summary>$(Description)</Summary>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="test.p8;xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
