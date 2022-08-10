@@ -18,7 +18,7 @@ internal static class AuthenticationModule
     public static IServiceCollection AddSignInWithApple(this IServiceCollection builder)
     {
         return builder
-            .AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
                 options.LoginPath = SignInPath;
