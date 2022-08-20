@@ -4,9 +4,9 @@ on:
   push:
     branches: [ main ]
     paths-ignore:
-    - '**/*.md'
-    - '**/*.gitignore'
     - '**/*.gitattributes'
+    - '**/*.gitignore'
+    - '**/*.md'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -56,7 +56,7 @@ jobs:
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
   deploy:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.event.repository.fork == false && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
     name: deploy-production
     needs: build
     runs-on: windows-latest
