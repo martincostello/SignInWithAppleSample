@@ -1,14 +1,13 @@
-name: update-dotnet-sdk
+name: update-static-assets
 
 on:
   schedule:
-    - cron:  '30 05 * * MON-FRI'
-    - cron:  '00 19 * * TUE'
+    - cron:  '0 5 * * *'
   workflow_dispatch:
 
 jobs:
-  update-dotnet-sdk:
-    name: Update .NET SDK
+  update-static-assets:
+    name: Update static assets
     runs-on: ubuntu-latest
     if: ${{ github.event.repository.fork == false }}
 
@@ -17,8 +16,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Update .NET SDK
-      uses: martincostello/update-dotnet-sdk@v2
+    - name: Update static assets
+      uses: martincostello/update-static-assets@v1
       with:
         labels: dependencies
         repo-token: ${{ secrets.ACCESS_TOKEN }}
