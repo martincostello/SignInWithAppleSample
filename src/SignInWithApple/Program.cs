@@ -12,6 +12,8 @@ builder.TryConfigureAzureKeyVault();
 builder.Services.AddRazorPages();
 builder.Services.AddSignInWithApple();
 
+builder.WebHost.ConfigureKestrel((p) => p.AddServerHeader = false);
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -23,6 +25,8 @@ else
     app.UseExceptionHandler("/error")
        .UseStatusCodePages();
 }
+
+app.UseMiddleware<SecurityHeadersMiddleware>();
 
 app.UseHsts();
 app.UseHttpsRedirection();
