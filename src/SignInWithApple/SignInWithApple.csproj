@@ -7,15 +7,15 @@
     <OutputType>Exe</OutputType>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <RootNamespace>MartinCostello.SignInWithApple</RootNamespace>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <UserSecretsId>MartinCostello.SignInWithApple</UserSecretsId>
-    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionPrefix>3.0.0</VersionPrefix>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AspNet.Security.OAuth.Apple" Version="7.0.4" />
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
     <PackageReference Include="Azure.Identity" Version="1.10.2" />
-    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="7.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="8.0.0-preview.1.23112.2" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="7.0.2" />
   </ItemGroup>
   <Target Name="AddGeneratedContentItems" BeforeTargets="AssignTargetPaths">
