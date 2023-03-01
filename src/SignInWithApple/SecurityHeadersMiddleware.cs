@@ -1,6 +1,8 @@
 // Copyright (c) Martin Costello, 2019. All rights reserved.
 // Licensed under the Apache 2.0 license. See the LICENSE file in the project root for full license information.
 
+using Microsoft.Net.Http.Headers;
+
 namespace MartinCostello.SignInWithApple;
 
 internal sealed class SecurityHeadersMiddleware
@@ -34,15 +36,15 @@ internal sealed class SecurityHeadersMiddleware
     {
         _next = next;
     }
-    
+
     public Task Invoke(HttpContext context)
     {
         context.Response.OnStarting(() =>
         {
-            context.Response.Headers.Remove("Server");
-            context.Response.Headers.Remove("X-Powered-By");
+            context.Response.Headers.Remove(HeaderNames.Server);
+            context.Response.Headers.Remove(HeaderNames.XPoweredBy);
 
-            context.Response.Headers["Content-Security-Policy"] = ContentSecurityPolicy;
+            context.Response.Headers.ContentSecurityPolicy = ContentSecurityPolicy;
 
             if (context.Request.IsHttps)
             {
@@ -51,15 +53,15 @@ internal sealed class SecurityHeadersMiddleware
 
             context.Response.Headers["Permissions-Policy"] = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()";
             context.Response.Headers["Referrer-Policy"] = "no-referrer-when-downgrade";
-            context.Response.Headers["X-Content-Type-Options"] = "nosniff";
+            context.Response.Headers.XContentTypeOptions = "nosniff";
             context.Response.Headers["X-Download-Options"] = "noopen";
 
-            if (!context.Response.Headers.ContainsKey("X-Frame-Options"))
+            if (!context.Response.Headers.ContainsKey(HeaderNames.XFrameOptions))
             {
-                context.Response.Headers.Add("X-Frame-Options", "DENY");
+                context.Response.Headers.XFrameOptions = "DENY";
             }
 
-            context.Response.Headers["X-XSS-Protection"] = "1; mode=block";
+            context.Response.Headers.XXSSProtection = "1; mode=block";
 
             return Task.CompletedTask;
         });
