@@ -5,6 +5,9 @@ on:
     - cron:  '0 5 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   update-static-assets:
     name: Update static assets
@@ -15,6 +18,8 @@ jobs:
 
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.ACCESS_TOKEN }}
 
     - name: Update static assets
       uses: martincostello/update-static-assets@v1
