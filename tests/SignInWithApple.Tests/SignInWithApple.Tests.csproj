@@ -2,9 +2,7 @@
   <PropertyGroup>
     <AssemblyName>MartinCostello.SignInWithApple.Tests</AssemblyName>
     <Description>Unit tests for MartinCostello.SignInWithApple.</Description>
-    <ImplicitUsings>enable</ImplicitUsings>
     <IsTestProject>true</IsTestProject>
-    <LangVersion>latest</LangVersion>
     <NoWarn>$(NoWarn);CA1308;CA1711;CA2000;CA2007;SA1600</NoWarn>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <RootNamespace>MartinCostello.SignInWithApple</RootNamespace>

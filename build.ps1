@@ -103,4 +103,3 @@ $publishPath = (Join-Path $OutputPath "publish")
 if ($LASTEXITCODE -ne 0) {
     throw "dotnet publish failed with exit code $LASTEXITCODE"
 }
-
