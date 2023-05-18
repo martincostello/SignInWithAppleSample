@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <Authors>Martin Costello</Authors>
+    <Company>Martin Costello</Company>
+    <Copyright>Martin Costello (c) $([System.DateTime]::Now.ToString(yyyy))</Copyright>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/martincostello/SignInWithAppleSample.git</RepositoryUrl>
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+  </PropertyGroup>
+</Project>
