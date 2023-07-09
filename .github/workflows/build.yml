@@ -58,16 +58,27 @@ jobs:
         if-no-files-found: error
 
   deploy:
-    if: ${{ github.event.repository.fork == false && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+    if: ${{ github.event.repository.fork == false && github.ref_name == github.event.repository.default_branch }}
     name: deploy-production
     needs: build
     runs-on: windows-latest
     concurrency: production_environment
+
     environment:
       name: production
       url: ${{ env.APPLICATION_URL_PROD }}
 
+    permissions:
+      id-token: write
+
     steps:
+
+    - name: Azure log in
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Download artifacts
       uses: actions/download-artifact@v3
@@ -79,4 +90,3 @@ jobs:
       id: deploy_production
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }}
