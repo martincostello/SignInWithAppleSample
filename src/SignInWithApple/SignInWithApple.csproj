@@ -11,10 +11,10 @@
     <VersionPrefix>3.0.0</VersionPrefix>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="8.0.0-preview.5.23314.34" />
+    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="8.0.0-preview.5.23319.32" />
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
     <PackageReference Include="Azure.Identity" Version="1.9.0" />
-    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="8.0.0-preview.5.23302.2" />
+    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="8.0.0-preview.6.23329.11" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.31.0" />
   </ItemGroup>
   <Target Name="AddGeneratedContentItems" BeforeTargets="AssignTargetPaths">
