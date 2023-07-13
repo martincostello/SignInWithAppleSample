@@ -2,8 +2,6 @@
   <PropertyGroup>
     <AspNetCoreHostingModel>inprocess</AspNetCoreHostingModel>
     <AssemblyName>MartinCostello.SignInWithApple</AssemblyName>
-    <ChecksumAlgorithm>SHA256</ChecksumAlgorithm>
-    <EnableConfigurationBindingGenerator>true</EnableConfigurationBindingGenerator>
     <EnableRequestDelegateGenerator>true</EnableRequestDelegateGenerator>
     <NeutralLanguage>en-US</NeutralLanguage>
     <OutputType>Exe</OutputType>
