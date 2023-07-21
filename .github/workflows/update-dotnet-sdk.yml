@@ -10,10 +10,12 @@ permissions:
 
 jobs:
   update-sdk:
-    uses: martincostello/update-dotnet-sdk/.github/workflows/update-dotnet-sdk.yml@ff9a6f247704ef1b77eb3c478070d8fa69c2360e # v2.2.3
+    uses: martincostello/update-dotnet-sdk/.github/workflows/update-dotnet-sdk.yml@dotnet-nightly
     with:
       include-nuget-packages: "AspNet.Security.OAuth.Apple,Microsoft.AspNetCore."
       labels: "dependencies,.NET"
+      channel: '8.0.1xx-preview7'
+      quality: 'daily'
       user-email: ${{ vars.GIT_COMMIT_USER_EMAIL }}
       user-name: ${{ vars.GIT_COMMIT_USER_NAME }}
     secrets:
