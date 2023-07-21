@@ -12,7 +12,7 @@ jobs:
   update-sdk:
     uses: martincostello/update-dotnet-sdk/.github/workflows/update-dotnet-sdk.yml@638a19214b5333029150c3347f4c4552c17ed926 # v2.2.4
     with:
-      labels: "dependencies,.NET"
+      labels: 'dependencies,.NET'
       user-email: ${{ vars.GIT_COMMIT_USER_EMAIL }}
       user-name: ${{ vars.GIT_COMMIT_USER_NAME }}
     secrets:
