@@ -14,6 +14,7 @@ jobs:
     with:
       include-nuget-packages: 'AspNet.Security.OAuth.Apple,Microsoft.AspNetCore.'
       labels: 'dependencies,.NET'
+      quality: 'daily'
       user-email: ${{ vars.GIT_COMMIT_USER_EMAIL }}
       user-name: ${{ vars.GIT_COMMIT_USER_NAME }}
     secrets:
