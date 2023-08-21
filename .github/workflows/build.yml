@@ -76,17 +76,17 @@ jobs:
 
     steps:
 
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: webapp
+
     - name: Azure log in
       uses: azure/login@v1
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-    - name: Download artifacts
-      uses: actions/download-artifact@v3
-      with:
-        name: webapp
 
     - name: Deploy to Azure App Service
       uses: azure/webapps-deploy@v2
