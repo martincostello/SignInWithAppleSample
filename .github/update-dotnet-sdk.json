@@ -1,4 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/martincostello/github-automation/main/.github/update-dotnet-sdk-schema.json",
-  "include-nuget-packages": "AspNet.Security.OAuth.Apple,Microsoft.AspNetCore."
+  "include-nuget-packages": "AspNet.Security.OAuth.Apple,Microsoft.AspNetCore.",
+  "update-nuget-packages": true
 }
