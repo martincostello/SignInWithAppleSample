@@ -8,6 +8,7 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/martincostello/SignInWithAppleSample.git</RepositoryUrl>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <UseArtifactsOutput>true</UseArtifactsOutput>
   </PropertyGroup>
 </Project>
