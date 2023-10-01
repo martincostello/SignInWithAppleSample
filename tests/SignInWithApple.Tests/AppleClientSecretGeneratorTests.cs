@@ -16,15 +16,8 @@ using Xunit.Abstractions;
 
 namespace MartinCostello.SignInWithApple;
 
-public class AppleClientSecretGeneratorTests
+public class AppleClientSecretGeneratorTests(ITestOutputHelper outputHelper)
 {
-    public AppleClientSecretGeneratorTests(ITestOutputHelper outputHelper)
-    {
-        OutputHelper = outputHelper;
-    }
-
-    private ITestOutputHelper OutputHelper { get; }
-
     [Fact]
     public async Task GenerateAsync_Generates_Valid_Signed_Jwt()
     {
@@ -63,7 +56,7 @@ public class AppleClientSecretGeneratorTests
 
             // See https://github.com/aspnet-contrib/AspNet.Security.OAuth.Providers/issues/684
             securityToken.Header.Keys.Order().ShouldBe(
-                new string[] { "alg", "kid", "typ" },
+                ["alg", "kid", "typ"],
                 Case.Sensitive,
                 "JWT header contains unexpected additional claims.");
 
@@ -77,7 +70,7 @@ public class AppleClientSecretGeneratorTests
             securityToken.Payload.Expiration.HasValue.ShouldBeTrue();
 
             securityToken.Payload.Keys.Order().ShouldBe(
-                new string[] { "aud", "exp", "iat", "iss", "nbf", "sub" },
+                ["aud", "exp", "iat", "iss", "nbf", "sub"],
                 Case.Sensitive,
                 "JWT payload contains unexpected additional claims.");
 
@@ -96,7 +89,7 @@ public class AppleClientSecretGeneratorTests
     {
         // Arrange
         var builder = new WebHostBuilder()
-            .ConfigureLogging((p) => p.AddXUnit(OutputHelper).SetMinimumLevel(LogLevel.Debug))
+            .ConfigureLogging((p) => p.AddXUnit(outputHelper).SetMinimumLevel(LogLevel.Debug))
             .Configure((app) => app.UseAuthentication())
             .ConfigureServices((services) =>
             {
