@@ -5,12 +5,11 @@ using Microsoft.Net.Http.Headers;
 
 namespace MartinCostello.SignInWithApple;
 
-internal sealed class SecurityHeadersMiddleware
+internal sealed class SecurityHeadersMiddleware(RequestDelegate next)
 {
     private static readonly string ContentSecurityPolicy = string.Join(
         ';',
-        new[]
-        {
+        [
             "default-src 'self'",
             "script-src 'self' cdnjs.cloudflare.com",
             "script-src-elem 'self' cdnjs.cloudflare.com",
@@ -28,14 +27,7 @@ internal sealed class SecurityHeadersMiddleware
             "base-uri 'self'",
             "manifest-src 'self'",
             "upgrade-insecure-requests",
-        });
-
-    private readonly RequestDelegate _next;
-
-    public SecurityHeadersMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
+        ]);
 
     public Task Invoke(HttpContext context)
     {
@@ -66,6 +58,6 @@ internal sealed class SecurityHeadersMiddleware
             return Task.CompletedTask;
         });
 
-        return _next(context);
+        return next(context);
     }
 }
