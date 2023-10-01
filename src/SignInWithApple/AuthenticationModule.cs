@@ -69,7 +69,7 @@ internal static class AuthenticationModule
 
             return Results.Challenge(
                 new() { RedirectUri = RootPath },
-                new[] { AppleAuthenticationDefaults.AuthenticationScheme });
+                [AppleAuthenticationDefaults.AuthenticationScheme]);
         });
 
         builder.MapPost(SignOutPath, async (HttpContext context, IAntiforgery antiforgery) =>
@@ -81,7 +81,7 @@ internal static class AuthenticationModule
 
             return Results.SignOut(
                 new() { RedirectUri = RootPath },
-                new[] { CookieAuthenticationDefaults.AuthenticationScheme });
+                [CookieAuthenticationDefaults.AuthenticationScheme]);
         });
 
         return builder;
