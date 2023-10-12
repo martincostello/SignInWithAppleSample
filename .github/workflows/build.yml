@@ -89,7 +89,7 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Deploy to Azure App Service
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v3
       id: deploy_production
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
