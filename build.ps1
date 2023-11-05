@@ -73,7 +73,7 @@ if ($SkipTests -eq $false) {
         $additionalArgs += "GitHubActions;report-warnings=false"
     }
 
-    & $dotnet test (Join-Path $solutionPath "tests" "SignInWithApple.Tests") --configuration "Release" $additionalArgs
+    & $dotnet test (Join-Path $solutionPath "tests" "SignInWithApple.Tests") --configuration "Release" --tl $additionalArgs
 
     if ($LASTEXITCODE -ne 0) {
         throw "dotnet test failed with exit code $LASTEXITCODE"
@@ -90,7 +90,7 @@ if (![string]::IsNullOrEmpty($Runtime)) {
     $additionalArgs += $Runtime
 }
 
-& $dotnet publish (Join-Path $solutionPath "src" "SignInWithApple") $additionalArgs
+& $dotnet publish (Join-Path $solutionPath "src" "SignInWithApple") --tl $additionalArgs
 
 if ($LASTEXITCODE -ne 0) {
     throw "dotnet publish failed with exit code $LASTEXITCODE"
