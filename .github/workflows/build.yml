@@ -27,7 +27,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION: 1
   NUGET_XMLDOC_MODE: skip
-  PUBLISH_RUNTIME: win10-x64
+  PUBLISH_RUNTIME: win-x64
   TERM: xterm
 
 jobs:
@@ -57,7 +57,7 @@ jobs:
       if: ${{ runner.os == 'Windows' }}
       with:
         name: webapp
-        path: ./artifacts/publish
+        path: ./artifacts/publish/SignInWithApple/release_${{ env.PUBLISH_RUNTIME }}
         if-no-files-found: error
 
   deploy:
