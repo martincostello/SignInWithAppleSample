@@ -4,6 +4,10 @@ param(
     [Parameter(Mandatory = $false)][string] $Runtime = ""
 )
 
+if ($null -eq $env:MSBUILDTERMINALLOGGER) {
+    $env:MSBUILDTERMINALLOGGER = "auto"
+}
+
 $solutionPath = $PSScriptRoot
 $sdkFile = Join-Path $solutionPath "global.json"
 
@@ -31,7 +35,7 @@ else {
 
 if ($installDotNetSdk -eq $true) {
     $env:DOTNET_INSTALL_DIR = Join-Path $PSScriptRoot ".dotnetcli"
-    $sdkPath = Join-Path $env:DOTNET_INSTALL_DIR "sdk\$dotnetVersion"
+    $sdkPath = Join-Path $env:DOTNET_INSTALL_DIR "sdk" $dotnetVersion
 
     if (!(Test-Path $sdkPath)) {
         if (!(Test-Path $env:DOTNET_INSTALL_DIR)) {
@@ -73,7 +77,7 @@ if ($SkipTests -eq $false) {
         $additionalArgs += "GitHubActions;report-warnings=false"
     }
 
-    & $dotnet test (Join-Path $solutionPath "tests" "SignInWithApple.Tests") --configuration "Release" --tl $additionalArgs
+    & $dotnet test (Join-Path $solutionPath "tests" "SignInWithApple.Tests") --configuration "Release" $additionalArgs
 
     if ($LASTEXITCODE -ne 0) {
         throw "dotnet test failed with exit code $LASTEXITCODE"
@@ -90,7 +94,7 @@ if (![string]::IsNullOrEmpty($Runtime)) {
     $additionalArgs += $Runtime
 }
 
-& $dotnet publish (Join-Path $solutionPath "src" "SignInWithApple") --tl $additionalArgs
+& $dotnet publish (Join-Path $solutionPath "src" "SignInWithApple") $additionalArgs
 
 if ($LASTEXITCODE -ne 0) {
     throw "dotnet publish failed with exit code $LASTEXITCODE"
