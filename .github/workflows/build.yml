@@ -53,7 +53,7 @@ jobs:
       run: ./build.ps1 -Runtime "${{ env.PUBLISH_RUNTIME }}"
 
     - name: Publish artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: ${{ runner.os == 'Windows' }}
       with:
         name: webapp
