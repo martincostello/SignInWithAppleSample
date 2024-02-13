@@ -4,20 +4,21 @@
     <AssemblyName>MartinCostello.SignInWithApple</AssemblyName>
     <ChecksumAlgorithm>SHA256</ChecksumAlgorithm>
     <EnableConfigurationBindingGenerator>true</EnableConfigurationBindingGenerator>
-    <EnableRequestDelegateGenerator>true</EnableRequestDelegateGenerator>
+    <!-- HACK Disable RDG as it forces use of nullable annotations -->
+    <EnableRequestDelegateGenerator>false</EnableRequestDelegateGenerator>
     <NeutralLanguage>en-US</NeutralLanguage>
     <OutputType>Exe</OutputType>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <RootNamespace>MartinCostello.SignInWithApple</RootNamespace>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <UserSecretsId>MartinCostello.SignInWithApple</UserSecretsId>
-    <VersionPrefix>3.0.0</VersionPrefix>
+    <VersionPrefix>4.0.0</VersionPrefix>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AspNet.Security.OAuth.Apple" Version="8.0.0" />
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.3.1" />
     <PackageReference Include="Azure.Identity" Version="1.11.0" />
-    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="9.0.0-preview.1.24081.5" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="7.5.1" />
   </ItemGroup>
   <Target Name="AddGeneratedContentItems" BeforeTargets="AssignTargetPaths">
