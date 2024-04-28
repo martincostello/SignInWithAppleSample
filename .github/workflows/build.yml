@@ -72,7 +72,7 @@ jobs:
       run: |
         dotnet publish ./src/SignInWithApple --arch x64 --os linux -p:PublishProfile=DefaultContainer
         if (-Not [string]::IsNullOrWhiteSpace(${env:CONTAINER_REGISTRY})) {
-          $containerTag = "${env:CONTAINER_REGISTRY}/${env:GITHUB_REPOSITORY}:github-${env:GITHUB_RUN_NUMBER}"
+          $containerTag = "${env:CONTAINER_REGISTRY}/${env:GITHUB_REPOSITORY}:github-${env:GITHUB_RUN_NUMBER}".ToLowerInvariant()
           "container-tag=${containerTag}" >> "${env:GITHUB_OUTPUT}"
         }
 
