@@ -18,8 +18,6 @@ permissions:
   contents: read
 
 env:
-  APPLICATION_URL_PROD: https://signinwithapple.martincostello.com
-  AZURE_WEBAPP_NAME: sign-in-with-apple
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_GENERATE_ASPNET_CERTIFICATE: false
   DOTNET_MULTILEVEL_LOOKUP: 0
@@ -27,13 +25,18 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION: 1
   NUGET_XMLDOC_MODE: skip
-  PUBLISH_RUNTIME: win-x64
   TERM: xterm
 
 jobs:
   build:
     name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+
+    env:
+      PUBLISH_CONTAINER: ${{ github.event.repository.fork == false && github.ref_name == github.event.repository.default_branch && matrix.os == 'ubuntu-latest' && vars.CONTAINER_REGISTRY != '' }}
+
+    outputs:
+      container-tag: ${{ steps.publish-container.outputs.container-tag }}
 
     strategy:
       fail-fast: false
@@ -50,36 +53,44 @@ jobs:
 
     - name: Build, test and publish
       shell: pwsh
-      run: ./build.ps1 -Runtime "${{ env.PUBLISH_RUNTIME }}"
+      run: ./build.ps1
 
-    - name: Publish artifacts
-      uses: actions/upload-artifact@v4
-      if: ${{ runner.os == 'Windows' }}
+    - name: Docker log in
+      uses: docker/login-action@v3
+      if: env.PUBLISH_CONTAINER == 'true'
       with:
-        name: webapp
-        path: ./artifacts/publish/SignInWithApple/release_${{ env.PUBLISH_RUNTIME }}
-        if-no-files-found: error
+        registry: ${{ vars.CONTAINER_REGISTRY }}
+        username: ${{ secrets.ACR_REGISTRY_USERNAME }}
+        password: ${{ secrets.ACR_REGISTRY_PASSWORD }}
+
+    - name: Publish container
+      id: publish-container
+      if: ${{ runner.os == 'Linux' }}
+      shell: pwsh
+      env:
+        ContainerRegistry: ${{ env.PUBLISH_CONTAINER == 'true' && vars.CONTAINER_REGISTRY || '' }}
+      run: |
+        dotnet publish ./src/SignInWithApple --arch x64 --os linux -p:PublishProfile=DefaultContainer
+        if (-Not [string]::IsNullOrWhiteSpace(${env:CONTAINER_REGISTRY})) {
+          $containerTag = "${env:CONTAINER_REGISTRY}/${env:GITHUB_REPOSITORY}:github-${env:GITHUB_RUN_NUMBER}".ToLowerInvariant()
+          "container-tag=${containerTag}" >> "${env:GITHUB_OUTPUT}"
+        }
 
   deploy:
     if: github.event.repository.fork == false && github.ref_name == github.event.repository.default_branch
     name: deploy-production
     needs: build
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     concurrency: production_environment
 
     environment:
       name: production
-      url: ${{ env.APPLICATION_URL_PROD }}
+      url: ${{ vars.APPLICATION_URL }}
 
     permissions:
       id-token: write
 
     steps:
-
-    - name: Download artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: webapp
 
     - name: Azure log in
       uses: azure/login@v2
@@ -88,8 +99,9 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Deploy to Azure App Service
+    - name: Deploy container to Azure App Service
       uses: azure/webapps-deploy@v3
       id: deploy_production
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        app-name: ${{ vars.AZURE_WEBAPP_NAME }}
+        images: ${{ needs.build.outputs.container-tag }}

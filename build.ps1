@@ -86,15 +86,7 @@ if ($SkipTests -eq $false) {
 
 Write-Host "Publishing solution..." -ForegroundColor Green
 
-$additionalArgs = @()
-
-if (![string]::IsNullOrEmpty($Runtime)) {
-    $additionalArgs += "--self-contained"
-    $additionalArgs += "--runtime"
-    $additionalArgs += $Runtime
-}
-
-& $dotnet publish (Join-Path $solutionPath "src" "SignInWithApple") $additionalArgs
+& $dotnet publish (Join-Path $solutionPath "src" "SignInWithApple")
 
 if ($LASTEXITCODE -ne 0) {
     throw "dotnet publish failed with exit code $LASTEXITCODE"
