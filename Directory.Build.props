@@ -3,6 +3,7 @@
     <Authors>Martin Costello</Authors>
     <Company>Martin Costello</Company>
     <Copyright>Martin Costello (c) $([System.DateTime]::Now.ToString(yyyy))</Copyright>
+    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
@@ -11,4 +12,16 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <UseArtifactsOutput>true</UseArtifactsOutput>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(GITHUB_ACTIONS)' == 'true' ">
+    <ContainerImageTags>github-$(GITHUB_RUN_NUMBER)</ContainerImageTags>
+    <ContainerImageTags Condition=" '$(GITHUB_HEAD_REF)' == '' ">$(ContainerImageTags);latest</ContainerImageTags>
+    <ContainerRepository>$(GITHUB_REPOSITORY)</ContainerRepository>
+    <ContainerTitle>$(GITHUB_REPOSITORY)</ContainerTitle>
+    <ContainerVendor>$(GITHUB_REPOSITORY_OWNER)</ContainerVendor>
+    <ContainerVersion>$(GITHUB_SHA)</ContainerVersion>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(GITHUB_ACTIONS)' == 'true' ">
+    <ContainerLabel Include="com.docker.extension.changelog" Value="$(GITHUB_SERVER_URL)/$(GITHUB_REPOSITORY)/commit/$(GITHUB_SHA)" />
+    <ContainerLabel Include="com.docker.extension.publisher-url" Value="$(GITHUB_SERVER_URL)/$(GITHUB_REPOSITORY_OWNER)" />
+  </ItemGroup>
 </Project>
