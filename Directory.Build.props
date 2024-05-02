@@ -3,7 +3,6 @@
     <Authors>Martin Costello</Authors>
     <Company>Martin Costello</Company>
     <Copyright>Martin Costello (c) $([System.DateTime]::Now.ToString(yyyy))</Copyright>
-    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
