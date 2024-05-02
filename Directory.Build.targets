@@ -1,0 +1,12 @@
+<Project>
+  <Target Name="SetGitHubContainerOutputs" AfterTargets="PublishContainer" Condition=" '$(GITHUB_OUTPUT)' != '' AND '$(ContainerRegistry)' != '' ">
+    <PropertyGroup>
+      <_ContainerImage>$(ContainerRegistry)/$(ContainerRepository)</_ContainerImage>
+      <_ContainerImage>$(_ContainerImage.ToLowerInvariant())</_ContainerImage>
+      <_ContainerTag>$(_ContainerImage):github-$(GITHUB_RUN_NUMBER)</_ContainerTag>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(GITHUB_OUTPUT)" Lines="container-digest=$(GeneratedContainerDigest)" />
+    <WriteLinesToFile File="$(GITHUB_OUTPUT)" Lines="container-image=$(_ContainerImage)" />
+    <WriteLinesToFile File="$(GITHUB_OUTPUT)" Lines="container-tag=$(_ContainerTag)" />
+  </Target>
+</Project>

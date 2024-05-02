@@ -38,6 +38,11 @@ jobs:
     outputs:
       container-tag: ${{ steps.publish-container.outputs.container-tag }}
 
+    permissions:
+      attestations: write
+      contents: read
+      id-token: write
+
     strategy:
       fail-fast: false
       matrix:
@@ -65,16 +70,20 @@ jobs:
 
     - name: Publish container
       id: publish-container
-      if: ${{ runner.os == 'Linux' }}
+      if: runner.os == 'Linux'
       shell: pwsh
       env:
         ContainerRegistry: ${{ env.PUBLISH_CONTAINER == 'true' && vars.CONTAINER_REGISTRY || '' }}
       run: |
         dotnet publish ./src/SignInWithApple --arch x64 --os linux -p:PublishProfile=DefaultContainer
-        if (-Not [string]::IsNullOrWhiteSpace(${env:ContainerRegistry})) {
-          $containerTag = "${env:ContainerRegistry}/${env:GITHUB_REPOSITORY}:github-${env:GITHUB_RUN_NUMBER}".ToLowerInvariant()
-          "container-tag=${containerTag}" >> "${env:GITHUB_OUTPUT}"
-        }
+
+    - name: Attest container image
+      uses: actions/attest-build-provenance@v1
+      if: steps.publish-container.outputs.container-digest != ''
+      with:
+        push-to-registry: true
+        subject-digest: ${{ steps.publish-container.outputs.container-digest }}
+        subject-name: ${{ steps.publish-container.outputs.container-image }}
 
   deploy:
     if: github.event.repository.fork == false && github.ref_name == github.event.repository.default_branch
