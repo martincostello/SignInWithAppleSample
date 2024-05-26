@@ -10,6 +10,7 @@
     <RepositoryUrl>https://github.com/martincostello/SignInWithAppleSample.git</RepositoryUrl>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <UseArtifactsOutput>true</UseArtifactsOutput>
+    <VersionPrefix>1.0.$([MSBuild]::ValueOrDefault('$(GITHUB_RUN_NUMBER)', '0'))</VersionPrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(GITHUB_ACTIONS)' == 'true' ">
     <ContainerImageTags>github-$(GITHUB_RUN_NUMBER)</ContainerImageTags>
