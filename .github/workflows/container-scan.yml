@@ -29,7 +29,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Configure Trivvy
+      - name: Configure Trivy
         id: configure
         shell: pwsh
         run: |
@@ -84,29 +84,36 @@ jobs:
             }
           }
           "has-vulnerabilities=$(($vulnerabilities.Length -ne 0))".ToLowerInvariant() >> ${env:GITHUB_OUTPUT}
+
           $report = @(
             "# Container Image Vulnerability Report",
             ""
           )
+
           if ($vulnerabilities.Length -eq 0) {
             $report += ":closed_lock_with_key: No vulnerabilities found."
           } else {
             $report += "| Library | Vulnerability | Severity | Status | Installed Version | Fixed Version | Title |"
             $report += "|:--------|:--------------|:---------|:-------|:------------------|:--------------|:------|"
+
             foreach ($vulnerability in $vulnerabilities) {
               $title = $vulnerability.Title
               if ([string]::IsNullOrEmpty($title)) {
                 $title = $vulnerability.Description
               }
+
               $fixedVersion = $vulnerability.FixedVersion
               if ([string]::IsNullOrEmpty($fixedVersion)) {
                 $fixedVersion = "N/A"
               }
+
               $report += "| $($vulnerability.PkgName) | $($vulnerability.VulnerabilityID) | $($vulnerability.Severity) | $($vulnerability.Status) | $($vulnerability.InstalledVersion) | ${fixedVersion} | [${title}]($($vulnerability.PrimaryURL)) |"
             }
           }
+
           $report += ""
           $report += ""
+
           ($report -Join "`n") >> ${env:GITHUB_STEP_SUMMARY}
 
       - name: Rebuild if any vulnerabilities found
