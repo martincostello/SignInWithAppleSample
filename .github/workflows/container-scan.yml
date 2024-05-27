@@ -1,0 +1,64 @@
+name: container-scan
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+env:
+  FORCE_COLOR: 3
+  TERM: xterm
+
+jobs:
+  scan-image:
+    runs-on: ubuntu-latest
+    if: github.event.repository.fork == false
+
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure Trivvy
+        id: configure
+        shell: pwsh
+        run: |
+          $registry = "${env:GITHUB_REPOSITORY_OWNER}.azurecr.io"
+          $image = "${registry}/${env:GITHUB_REPOSITORY}:latest".ToLowerInvariant()
+          "container-image=${image}" >> ${env:GITHUB_OUTPUT}
+
+      - name: Run Trivy (SARIF)
+        uses: aquasecurity/trivy-action@0.21.0
+        env:
+          TRIVY_USERNAME: ${{ secrets.TRIVY_USERNAME }}
+          TRIVY_PASSWORD: ${{ secrets.TRIVY_PASSWORD }}
+        with:
+          image-ref: ${{ steps.configure.outputs.container-image }}
+          format: 'sarif'
+          ignore-unfixed: true
+          limit-severities-for-sarif: true
+          output: 'trivy.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@v3
+        if: ${{ !cancelled() }}
+        with:
+          sarif_file: 'trivy.sarif'
+
+      - name: Run Trivy (Table)
+        uses: aquasecurity/trivy-action@0.21.0
+        env:
+          TRIVY_USERNAME: ${{ secrets.TRIVY_USERNAME }}
+          TRIVY_PASSWORD: ${{ secrets.TRIVY_PASSWORD }}
+        with:
+          image-ref: ${{ steps.configure.outputs.container-image }}
+          format: 'table'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
