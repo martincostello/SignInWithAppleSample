@@ -73,17 +73,21 @@ jobs:
         shell: pwsh
         run: |
           $report = Get-Content ./trivy.json | Out-String | ConvertFrom-Json
+
           $vulnerabilities = @()
+          $hasVulnerabilities = $false
+
           foreach ($target in $report.Results) {
-            if ($target.Type -eq "dotnet-core") {
-              # Ignore vulnerabilities in the .NET application itself as a rebuild of the container won't fix these
-              continue
-            }
             foreach ($vulnerability in $target.Vulnerabilities) {
-                $vulnerabilities += $vulnerability
+              $vulnerabilities += $vulnerability
+              # Ignore vulnerabilities in the .NET application itself as a rebuild of the container won't fix these
+              if ($target.Type -ne "dotnet-core") {
+                $hasVulnerabilities = $true
+              }
             }
           }
-          "has-vulnerabilities=$(($vulnerabilities.Length -ne 0))".ToLowerInvariant() >> ${env:GITHUB_OUTPUT}
+
+          "has-vulnerabilities=${hasVulnerabilities}".ToLowerInvariant() >> ${env:GITHUB_OUTPUT}
 
           $report = @(
             "# Container Image Vulnerability Report",
