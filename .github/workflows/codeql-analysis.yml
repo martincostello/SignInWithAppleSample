@@ -21,17 +21,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
-
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
+        build-mode: none
         languages: csharp
         queries: security-and-quality
-
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v3
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
