@@ -9,25 +9,23 @@ internal sealed class SecurityHeadersMiddleware(RequestDelegate next)
 {
     private static readonly string ContentSecurityPolicy = string.Join(
         ';',
-        [
-            "default-src 'self'",
-            "script-src 'self' cdnjs.cloudflare.com",
-            "script-src-elem 'self' cdnjs.cloudflare.com",
-            "style-src 'self' cdnjs.cloudflare.com use.fontawesome.com",
-            "style-src-elem 'self' cdnjs.cloudflare.com",
-            "img-src 'self' data:",
-            "font-src 'self' cdnjs.cloudflare.com",
-            "connect-src 'self'",
-            "media-src 'none'",
-            "object-src 'none'",
-            "child-src 'none'",
-            "frame-ancestors 'none'",
-            "form-action 'self' appleid.apple.com",
-            "block-all-mixed-content",
-            "base-uri 'self'",
-            "manifest-src 'self'",
-            "upgrade-insecure-requests",
-        ]);
+        "default-src 'self'",
+        "script-src 'self' cdnjs.cloudflare.com",
+        "script-src-elem 'self' cdnjs.cloudflare.com",
+        "style-src 'self' cdnjs.cloudflare.com use.fontawesome.com",
+        "style-src-elem 'self' cdnjs.cloudflare.com",
+        "img-src 'self' data:",
+        "font-src 'self' cdnjs.cloudflare.com",
+        "connect-src 'self'",
+        "media-src 'none'",
+        "object-src 'none'",
+        "child-src 'none'",
+        "frame-ancestors 'none'",
+        "form-action 'self' appleid.apple.com",
+        "block-all-mixed-content",
+        "base-uri 'self'",
+        "manifest-src 'self'",
+        "upgrade-insecure-requests");
 
     public Task Invoke(HttpContext context)
     {
