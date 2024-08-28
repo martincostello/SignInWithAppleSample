@@ -37,4 +37,3 @@ jobs:
       uses: docker://rhysd/actionlint@sha256:435ecdb63b1169e80ca3e136290072548c07fc4d76a044cf5541021712f8f344 # v1.7.1
       with:
         args: -color
-
