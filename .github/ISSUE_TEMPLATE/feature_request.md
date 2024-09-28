@@ -4,7 +4,6 @@ about: Suggest an idea for a feature of this sample
 title: ''
 labels: 'enhancement'
 assignees: ''
-
 ---
 
 <!--

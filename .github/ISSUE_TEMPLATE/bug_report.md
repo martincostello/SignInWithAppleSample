@@ -4,7 +4,6 @@ about: Create a bug report to help us improve the sample
 title: ''
 labels: 'bug'
 assignees: ''
-
 ---
 
 <!--
@@ -33,7 +32,7 @@ assignees: ''
 
 ## System information
 
-- OS: [e.g. Windows 10]
+- OS: [e.g. Windows 11]
 - .NET version [e.g. output from `dotnet --info`]
 - IDE and version [e.g. Visual Studio 16.3.7]
 
