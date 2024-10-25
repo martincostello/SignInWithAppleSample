@@ -18,7 +18,7 @@
   <ItemGroup>
     <PackageReference Include="AspNet.Security.OAuth.Apple" Version="8.2.0" />
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.3.2" />
-    <PackageReference Include="Azure.Identity" Version="1.13.0" />
+    <PackageReference Include="Azure.Identity" Version="1.13.1" />
     <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="8.0.10" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.1.2" />
   </ItemGroup>
