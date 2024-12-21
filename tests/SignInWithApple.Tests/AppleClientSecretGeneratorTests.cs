@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Shouldly;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace MartinCostello.SignInWithApple;
 
