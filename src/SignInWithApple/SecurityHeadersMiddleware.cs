@@ -36,6 +36,10 @@ internal sealed class SecurityHeadersMiddleware(RequestDelegate next)
 
             context.Response.Headers.ContentSecurityPolicy = ContentSecurityPolicy;
 
+            context.Response.Headers["Cross-Origin-Embedder-Policy"] = "unsafe-none";
+            context.Response.Headers["Cross-Origin-Opener-Policy"] = "same-origin";
+            context.Response.Headers["Cross-Origin-Resource-Policy"] = "same-origin";
+
             if (context.Request.IsHttps)
             {
                 context.Response.Headers["Expect-CT"] = "max-age=1800";
