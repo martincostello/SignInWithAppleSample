@@ -1,6 +1,6 @@
 # _Sign in with Apple_ Example Integration
 
-[![Build status](https://github.com/martincostello/SignInWithAppleSample/workflows/build/badge.svg?branch=main&event=push)](https://github.com/martincostello/SignInWithAppleSample/actions?query=workflow%3Abuild+branch%3Amain+event%3Apush)
+[![Build status](https://github.com/martincostello/SignInWithAppleSample/actions/workflows/build.yml/badge.svg?branch=main&event=push)](https://github.com/martincostello/SignInWithAppleSample/actions/workflows/build.yml?query=branch%3Amain+event%3Apush)
 
 This repository contains a sample implementation of [_Sign in with Apple_](https://developer.apple.com/sign-in-with-apple/) for ASP.NET Core written in C#.
 
