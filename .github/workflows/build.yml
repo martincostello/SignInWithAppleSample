@@ -22,16 +22,18 @@ env:
   DOTNET_GENERATE_ASPNET_CERTIFICATE: false
   DOTNET_NOLOGO: true
   DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION: 1
+  FORCE_COLOR: 3
   NUGET_XMLDOC_MODE: skip
   TERM: xterm
 
 jobs:
   build:
-    name: ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os-name }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
 
     env:
-      PUBLISH_CONTAINER: ${{ github.event.repository.fork == false && github.ref_name == github.event.repository.default_branch && matrix.os == 'ubuntu-latest' && vars.CONTAINER_REGISTRY != '' }}
+      PUBLISH_CONTAINER: ${{ github.event.repository.fork == false && github.ref_name == github.event.repository.default_branch && matrix.os-name == 'linux' && vars.CONTAINER_REGISTRY != '' }}
 
     outputs:
       container-tag: ${{ steps.publish-container.outputs.container-tag }}
@@ -44,7 +46,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ macos-latest, ubuntu-latest, windows-latest ]
+        include:
+          - os-name: macos
+            runner: macos-latest
+          - os-name: linux
+            runner: ubuntu-latest
+          - os-name: windows
+            runner: windows-latest
 
     steps:
 
