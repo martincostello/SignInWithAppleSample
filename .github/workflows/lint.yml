@@ -29,12 +29,15 @@ jobs:
 
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        filter: 'tree:0'
+        show-progress: false
 
     - name: Add actionlint problem matcher
       run: echo "::add-matcher::.github/actionlint-matcher.json"
 
     - name: Lint workflows
-      uses: docker://rhysd/actionlint@sha256:887a259a5a534f3c4f36cb02dca341673c6089431057242cdc931e9f133147e9 # v1.7.7
+      uses: docker://rhysd/actionlint:1.7.7
       with:
         args: -color
 
@@ -44,3 +47,12 @@ jobs:
         config: '.markdownlint.json'
         globs: |
           **/*.md
+
+    - name: Lint PowerShell in workflows
+      uses: martincostello/lint-actions-powershell@v1
+      with:
+        treat-warnings-as-errors: true
+
+    - name: Lint PowerShell scripts
+      shell: pwsh
+      run: Invoke-ScriptAnalyzer -Path . -Recurse -IncludeDefaultRules -ReportSummary -Severity @('Error','Warning') -EnableExit
