@@ -1,7 +1,6 @@
 #! /usr/bin/env pwsh
 param(
-    [Parameter(Mandatory = $false)][switch] $SkipTests,
-    [Parameter(Mandatory = $false)][string] $Runtime = ""
+    [Parameter(Mandatory = $false)][switch] $SkipTests
 )
 
 $solutionPath = $PSScriptRoot
@@ -12,7 +11,7 @@ $dotnetVersion = (Get-Content $sdkFile | Out-String | ConvertFrom-Json).sdk.vers
 $installDotNetSdk = $false;
 
 if (($null -eq (Get-Command "dotnet" -ErrorAction SilentlyContinue)) -and ($null -eq (Get-Command "dotnet.exe" -ErrorAction SilentlyContinue))) {
-    Write-Host "The .NET SDK is not installed."
+    Write-Output "The .NET SDK is not installed."
     $installDotNetSdk = $true
 }
 else {
@@ -24,7 +23,7 @@ else {
     }
 
     if ($installedDotNetVersion -ne $dotnetVersion) {
-        Write-Host "The required version of the .NET SDK is not installed. Expected $dotnetVersion."
+        Write-Output "The required version of the .NET SDK is not installed. Expected $dotnetVersion."
         $installDotNetSdk = $true
     }
 }
@@ -64,7 +63,7 @@ if ($installDotNetSdk -eq $true) {
 
 if ($SkipTests -eq $false) {
 
-    Write-Host "Running tests..." -ForegroundColor Green
+    Write-Output "Running tests..."
 
     $additionalArgs = @()
 
@@ -80,7 +79,7 @@ if ($SkipTests -eq $false) {
     }
 }
 
-Write-Host "Publishing solution..." -ForegroundColor Green
+Write-Output "Publishing solution..."
 
 & $dotnet publish (Join-Path $solutionPath "src" "SignInWithApple")
 
