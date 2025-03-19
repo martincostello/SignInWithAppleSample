@@ -57,20 +57,20 @@ jobs:
     steps:
 
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
         filter: 'tree:0'
         show-progress: false
 
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
 
     - name: Build, test and publish
       shell: pwsh
       run: ./build.ps1
 
     - name: Docker log in
-      uses: docker/login-action@v3
+      uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
       if: env.PUBLISH_CONTAINER == 'true'
       with:
         registry: ${{ vars.CONTAINER_REGISTRY }}
@@ -87,7 +87,7 @@ jobs:
         dotnet publish ./src/SignInWithApple --arch x64 --os linux -p:PublishProfile=DefaultContainer
 
     - name: Attest container image
-      uses: actions/attest-build-provenance@v2
+      uses: actions/attest-build-provenance@c074443f1aee8d4aeeae555aebba3282517141b2 # v2.2.3
       if: steps.publish-container.outputs.container-digest != ''
       with:
         push-to-registry: true
@@ -111,14 +111,14 @@ jobs:
     steps:
 
     - name: Azure log in
-      uses: azure/login@v2
+      uses: azure/login@a65d910e8af852a8061c627c456678983e180302 # v2.2.0
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Deploy container to Azure App Service
-      uses: azure/webapps-deploy@v3
+      uses: azure/webapps-deploy@2fdd5c3ebb4e540834e86ecc1f6fdcd5539023ee # v3.0.2
       id: deploy_production
       with:
         app-name: ${{ vars.AZURE_WEBAPP_NAME }}
