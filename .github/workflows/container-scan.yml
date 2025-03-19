@@ -27,7 +27,7 @@ jobs:
     steps:
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           filter: 'tree:0'
           show-progress: false
@@ -41,7 +41,7 @@ jobs:
           "container-image=${image}" >> ${env:GITHUB_OUTPUT}
 
       - name: Run Trivy (SARIF)
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@6c175e9c4083a92bbca2f9724c8a5e33bc2d97a5 # 0.30.0
         env:
           TRIVY_DB_REPOSITORY: public.ecr.aws/aquasecurity/trivy-db:2
           TRIVY_USERNAME: ${{ secrets.TRIVY_USERNAME }}
@@ -55,13 +55,13 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
       - name: Upload Trivy scan results
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@5f8171a638ada777af81d42b55959a643bb29017 # v3.28.12
         if: ${{ !cancelled() }}
         with:
           sarif_file: 'trivy.sarif'
 
       - name: Run Trivy (JSON)
-        uses: aquasecurity/trivy-action@0.30.0
+        uses: aquasecurity/trivy-action@6c175e9c4083a92bbca2f9724c8a5e33bc2d97a5 # 0.30.0
         env:
           TRIVY_DB_REPOSITORY: public.ecr.aws/aquasecurity/trivy-db:2
           TRIVY_USERNAME: ${{ secrets.TRIVY_USERNAME }}
