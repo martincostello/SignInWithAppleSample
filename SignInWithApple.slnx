@@ -1,0 +1,36 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path=".vsconfig" />
+    <File Path="build.ps1" />
+    <File Path="CODE_OF_CONDUCT.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="global.json" />
+    <File Path="LICENSE" />
+    <File Path="NuGet.config" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/">
+    <File Path=".github/CONTRIBUTING.md" />
+    <File Path=".github/ISSUE_TEMPLATE.md" />
+    <File Path=".github/PULL_REQUEST_TEMPLATE.md" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/ISSUE_TEMPLATE/">
+    <File Path=".github/ISSUE_TEMPLATE/bug_report.md" />
+    <File Path=".github/ISSUE_TEMPLATE/feature_request.md" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/workflows/">
+    <File Path=".github/workflows/build.yml" />
+    <File Path=".github/workflows/codeql.yml" />
+    <File Path=".github/workflows/update-dotnet-sdk.yml" />
+    <File Path=".github/workflows/update-static-assets.yml" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/SignInWithApple/SignInWithApple.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SignInWithApple.Tests/SignInWithApple.Tests.csproj" />
+  </Folder>
+</Solution>

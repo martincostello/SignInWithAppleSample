@@ -61,7 +61,7 @@ if ($installDotNetSdk -eq $true) {
     $env:PATH = "$env:DOTNET_INSTALL_DIR;$env:PATH"
 }
 
-if ($SkipTests -eq $false) {
+if (-Not $SkipTests) {
 
     Write-Output "Running tests..."
 
@@ -72,7 +72,7 @@ if ($SkipTests -eq $false) {
         $additionalArgs += "GitHubActions;report-warnings=false"
     }
 
-    & $dotnet test (Join-Path $solutionPath "tests" "SignInWithApple.Tests") --configuration "Release" $additionalArgs
+    & $dotnet test --configuration "Release" $additionalArgs
 
     if ($LASTEXITCODE -ne 0) {
         throw "dotnet test failed with exit code $LASTEXITCODE"
