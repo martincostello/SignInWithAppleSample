@@ -29,7 +29,7 @@ else {
 }
 
 if ($installDotNetSdk -eq $true) {
-    $env:DOTNET_INSTALL_DIR = Join-Path $PSScriptRoot ".dotnetcli"
+    $env:DOTNET_INSTALL_DIR = Join-Path $PSScriptRoot ".dotnet"
     $sdkPath = Join-Path $env:DOTNET_INSTALL_DIR "sdk" $dotnetVersion
 
     if (!(Test-Path $sdkPath)) {
