@@ -95,7 +95,7 @@ jobs:
         dotnet publish ./src/SignInWithApple --arch x64 --os linux -p:PublishProfile=DefaultContainer
 
     - name: Attest container image
-      uses: actions/attest-build-provenance@c074443f1aee8d4aeeae555aebba3282517141b2 # v2.2.3
+      uses: actions/attest-build-provenance@db473fddc028af60658334401dc6fa3ffd8669fd # v2.3.0
       if: steps.publish-container.outputs.container-digest != ''
       with:
         push-to-registry: true
