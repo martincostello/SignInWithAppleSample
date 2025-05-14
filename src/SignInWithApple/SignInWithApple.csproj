@@ -16,10 +16,10 @@
     <VersionPrefix>4.0.0</VersionPrefix>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="10.0.0-preview.3.25210.79" />
+    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="10.0.0-preview.4.25264.51" />
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.4.0" />
     <PackageReference Include="Azure.Identity" Version="1.17.0" />
-    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="10.0.0-preview.3.25172.1" />
+    <PackageReference Include="Microsoft.AspNetCore.AzureAppServices.HostingStartup" Version="10.0.0-preview.4.25258.110" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.14.0" />
   </ItemGroup>
   <ItemGroup>
