@@ -126,7 +126,7 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Deploy container to Azure App Service
-      uses: azure/webapps-deploy@2fdd5c3ebb4e540834e86ecc1f6fdcd5539023ee # v3.0.2
+      uses: azure/webapps-deploy@89acad3342dd3889ea855ea0973b59bd8d132e0b # v3.0.3
       id: deploy_production
       with:
         app-name: ${{ vars.AZURE_WEBAPP_NAME }}
