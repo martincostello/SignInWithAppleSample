@@ -1,6 +1,6 @@
 {
   "sdk": {
-    "version": "9.0.303",
+    "version": "9.0.304",
     "allowPrerelease": false,
     "paths": [ ".dotnet", "$host$" ],
     "errorMessage": "The required version of the .NET SDK could not be found. Please run ./build.ps1 to bootstrap the .NET SDK."
