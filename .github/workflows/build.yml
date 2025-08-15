@@ -14,8 +14,7 @@ on:
       - dotnet-nightly
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 env:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
