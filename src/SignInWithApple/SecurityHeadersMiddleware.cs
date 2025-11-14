@@ -16,7 +16,7 @@ internal sealed class SecurityHeadersMiddleware(RequestDelegate next)
         "style-src-elem 'self' cdnjs.cloudflare.com",
         "img-src 'self' data:",
         "font-src 'self' cdnjs.cloudflare.com",
-        "connect-src 'self'",
+        "connect-src 'self' cdnjs.cloudflare.com",
         "media-src 'none'",
         "object-src 'none'",
         "child-src 'none'",
