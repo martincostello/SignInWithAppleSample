@@ -98,6 +98,7 @@ jobs:
       uses: actions/attest-build-provenance@00014ed6ed5efc5b1ab7f7f34a39eb55d41aa4f8 # v3.1.0
       if: steps.publish-container.outputs.container-digest != ''
       with:
+        create-storage-record: false
         push-to-registry: true
         subject-digest: ${{ steps.publish-container.outputs.container-digest }}
         subject-name: ${{ steps.publish-container.outputs.container-image }}
