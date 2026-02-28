@@ -62,6 +62,6 @@ internal static class WebApplicationBuilderExtensions
         return
             useClientSecret ?
             new ClientSecretCredential(tenantId, clientId, clientSecret) :
-            new ManagedIdentityCredential();
+            new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
     }
 }
