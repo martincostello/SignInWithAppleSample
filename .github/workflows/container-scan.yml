@@ -11,7 +11,7 @@ env:
   FORCE_COLOR: 3
   TERM: xterm
   # renovate: datasource=github-releases depName=trivy packageName=aquasecurity/trivy
-  TRIVY_VERSION: 'v0.69.2'
+  TRIVY_VERSION: 'v0.69.3'
 
 jobs:
   scan-image:
