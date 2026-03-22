@@ -10,8 +10,6 @@ permissions: {}
 env:
   FORCE_COLOR: 3
   TERM: xterm
-  # renovate: datasource=github-releases depName=trivy packageName=aquasecurity/trivy
-  TRIVY_VERSION: 'v0.69.3'
 
 jobs:
   scan-image:
@@ -56,7 +54,6 @@ jobs:
           limit-severities-for-sarif: true
           output: 'trivy.sarif'
           severity: 'CRITICAL,HIGH'
-          version: ${{ env.TRIVY_VERSION }}
 
       - name: Upload Trivy scan results
         uses: github/codeql-action/upload-sarif@c6f931105cb2c34c8f901cc885ba1e2e259cf745 # v4.34.0
