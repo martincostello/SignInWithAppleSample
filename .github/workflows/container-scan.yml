@@ -73,7 +73,6 @@ jobs:
           ignore-unfixed: true
           output: 'trivy.json'
           severity: 'CRITICAL,HIGH'
-          version: ${{ env.TRIVY_VERSION }}
 
       - name: Check for vulnerabilities
         id: check-for-vulnerabilities
