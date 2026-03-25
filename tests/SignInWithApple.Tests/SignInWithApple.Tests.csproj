@@ -18,7 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="GitHubActionsTestLogger" Version="3.0.1" />
+    <PackageReference Include="GitHubActionsTestLogger" Version="3.0.2" />
     <PackageReference Include="MartinCostello.Logging.XUnit.v3" Version="0.7.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
     <PackageReference Include="Shouldly" Version="4.3.0" />
