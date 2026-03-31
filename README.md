@@ -19,7 +19,7 @@ To setup the repository to run the sample, perform the steps below:
   1. Clone the repository from your fork to your local machine: `git clone https://github.com/{username}/SignInWithAppleSample.git`
   1. [Follow the steps](https://developer.okta.com/blog/2019/06/04/what-the-heck-is-sign-in-with-apple#how-sign-in-with-apple-works-hint-it-uses-oauth-and-oidc) to obtain your _Client ID_, _Private Key_, _Key ID_ and Domain Verification file, if you do not already have them.
   1. Place the Domain Verification file (`apple-developer-domain-association.txt`) in the `src\SignInWithApple\wwwroot\.well-known` folder.
-  1. Either add your `.p8` file contining the private key to generate the client secret to the root of the application in `src\SignInWithApple` (but **not** in the `wwwroot` folder), or use some other mechanism, such as loading it from a blob storage account.
+  1. Either add your `.p8` file containing the private key to generate the client secret to the root of the application in `src\SignInWithApple` (but **not** in the `wwwroot` folder), or use some other mechanism, such as loading it from a blob storage account.
   1. Update the favicon (`src\SignInWithApple\wwwroot\favicon.ico`) to your own design.
   1. Configure the following settings as appropriate in either your environment variables or in `src\SignInWithApple\appsettings.json`:
       * `AppleClientId`
