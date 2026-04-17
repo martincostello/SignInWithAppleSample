@@ -2,7 +2,6 @@
 // Licensed under the Apache 2.0 license. See the LICENSE file in the project root for full license information.
 
 using MartinCostello.SignInWithApple;
-using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.IdentityModel.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,14 +30,19 @@ app.UseMiddleware<SecurityHeadersMiddleware>();
 app.UseHsts();
 app.UseHttpsRedirection();
 
-var provider = new FileExtensionContentTypeProvider();
-provider.Mappings[".webmanifest"] = "application/manifest+json";
+app.MapStaticAssets()
+   .ShortCircuit();
 
-app.UseStaticFiles(new StaticFileOptions
+app.MapGet("apple-app-site-association", static (IWebHostEnvironment environment) =>
 {
-    ContentTypeProvider = provider,
-    DefaultContentType = "application/json",
-    ServeUnknownFileTypes = true // Required to serve the files in the .well-known folder
+    var file = environment.WebRootFileProvider.GetFileInfo("apple-app-site-association.json");
+
+    if (!file.Exists)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.File(file.CreateReadStream(), contentType: "application/json");
 });
 
 app.UseRouting();
@@ -53,7 +57,5 @@ app.Run();
 
 namespace MartinCostello.SignInWithApple
 {
-    public partial class Program
-    {
-    }
+    public partial class Program;
 }
