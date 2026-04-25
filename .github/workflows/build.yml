@@ -144,7 +144,7 @@ jobs:
         for ($i = 0; $i -lt $limit; $i++) {
           $response = $null
           try {
-            $response = Invoke-WebRequest -Uri "${env:APPLICATION_URL}/version" -Method Get -UseBasicParsing
+            $response = Invoke-WebRequest -Uri ${env:APPLICATION_URL} -Method Get -UseBasicParsing
           } catch {
             $response = $_.Exception.Response
           }
