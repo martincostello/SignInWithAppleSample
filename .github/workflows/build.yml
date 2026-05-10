@@ -47,11 +47,11 @@ jobs:
       matrix:
         include:
           - os-name: macos
-            runner: macos-latest
+            runner: macos-26
           - os-name: linux
-            runner: ubuntu-latest
+            runner: ubuntu-24.04
           - os-name: windows
-            runner: windows-latest
+            runner: windows-2025
 
     steps:
 
@@ -107,7 +107,7 @@ jobs:
     if: github.event.repository.fork == false && github.ref_name == github.event.repository.default_branch
     name: deploy-production
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     concurrency: production_environment
 
     environment:
