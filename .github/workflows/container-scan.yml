@@ -20,8 +20,14 @@ jobs:
       group: ${{ github.workflow }}
       cancel-in-progress: false
 
+    environment:
+      name: container-scan
+      deployment: false
+
     permissions:
+      actions: write
       contents: read
+      id-token: write
       security-events: write
 
     steps:
@@ -32,6 +38,17 @@ jobs:
           filter: 'tree:0'
           persist-credentials: false
           show-progress: false
+
+      - name: Azure log in
+        uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3.0.0
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Log in to Azure Container Registry
+        shell: pwsh
+        run: az acr login --name ${env:GITHUB_REPOSITORY_OWNER}
 
       - name: Configure Trivy
         id: configure
@@ -45,8 +62,6 @@ jobs:
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         env:
           TRIVY_DB_REPOSITORY: public.ecr.aws/aquasecurity/trivy-db:2
-          TRIVY_USERNAME: ${{ secrets.TRIVY_USERNAME }}
-          TRIVY_PASSWORD: ${{ secrets.TRIVY_PASSWORD }}
         with:
           image-ref: ${{ steps.configure.outputs.container-image }}
           format: 'sarif'
@@ -65,8 +80,6 @@ jobs:
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         env:
           TRIVY_DB_REPOSITORY: public.ecr.aws/aquasecurity/trivy-db:2
-          TRIVY_USERNAME: ${{ secrets.TRIVY_USERNAME }}
-          TRIVY_PASSWORD: ${{ secrets.TRIVY_PASSWORD }}
         with:
           image-ref: ${{ steps.configure.outputs.container-image }}
           format: 'json'
@@ -131,5 +144,5 @@ jobs:
           github.event_name == 'schedule' &&
           steps.check-for-vulnerabilities.outputs.has-vulnerabilities == 'true'
         env:
-          GH_TOKEN: ${{ secrets.COSTELLOBOT_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh workflow run build.yml
