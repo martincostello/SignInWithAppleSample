@@ -24,8 +24,10 @@ jobs:
       name: container-scan
       deployment: false
 
+    outputs:
+      has-vulnerabilities: ${{ steps.check-for-vulnerabilities.outputs.has-vulnerabilities }}
+
     permissions:
-      actions: write
       contents: read
       id-token: write
       security-events: write
@@ -139,10 +141,24 @@ jobs:
 
           ($report -Join "`n") >> ${env:GITHUB_STEP_SUMMARY}
 
-      - name: Rebuild if any vulnerabilities found
-        if: |
-          github.event_name == 'schedule' &&
-          steps.check-for-vulnerabilities.outputs.has-vulnerabilities == 'true'
+  rebuild:
+    needs: scan-image
+    runs-on: ubuntu-24.04
+    if: |
+      github.event_name == 'schedule' &&
+      needs.scan-image.outputs.has-vulnerabilities == 'true'
+
+    concurrency:
+      group: ${{ github.workflow }}
+      cancel-in-progress: false
+
+    permissions:
+      actions: write
+
+    steps:
+
+      - name: Rebuild container image
+        shell: pwsh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run build.yml
+        run: gh workflow run build.yml --repo ${env:GITHUB_REPOSITORY}
