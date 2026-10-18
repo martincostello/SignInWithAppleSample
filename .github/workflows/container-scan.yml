@@ -52,6 +52,18 @@ jobs:
         shell: pwsh
         run: az acr login --name ${env:GITHUB_REPOSITORY_OWNER}
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          aws-region: us-east-1
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          role-session-name: ${{ github.event.repository.name }}-${{ github.run_id }}-container-scan
+
+      - name: Log in to Amazon ECR Public
+        uses: aws-actions/amazon-ecr-login@03f1aad4c6c7ffd436567f42f9384779290529bd # v2.1.7
+        with:
+          registry-type: public
+
       - name: Configure Trivy
         id: configure
         shell: pwsh
