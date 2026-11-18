@@ -35,14 +35,14 @@ jobs:
     steps:
 
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
         with:
           filter: 'tree:0'
           persist-credentials: false
           show-progress: false
 
       - name: Azure log in
-        uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 # v3.1.0
+        uses: azure/login@v3.1.0
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -53,14 +53,14 @@ jobs:
         run: az acr login --name ${env:GITHUB_REPOSITORY_OWNER}
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
           aws-region: us-east-1
           role-to-assume: ${{ secrets.AWS_ROLE }}
           role-session-name: ${{ github.event.repository.name }}-${{ github.run_id }}-container-scan
 
       - name: Log in to Amazon ECR Public
-        uses: aws-actions/amazon-ecr-login@7290e214a610b32bc0eef81748948b6d466a8783 # v2.2.0
+        uses: aws-actions/amazon-ecr-login@v2.2.0
         with:
           registry-type: public
 
@@ -73,7 +73,7 @@ jobs:
           "container-image=${image}" >> ${env:GITHUB_OUTPUT}
 
       - name: Run Trivy (SARIF)
-        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        uses: aquasecurity/trivy-action@v0.36.0
         env:
           TRIVY_DB_REPOSITORY: public.ecr.aws/aquasecurity/trivy-db:2
         with:
@@ -85,13 +85,13 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
       - name: Upload Trivy scan results
-        uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+        uses: github/codeql-action/upload-sarif@v4.39.3
         if: ${{ !cancelled() }}
         with:
           sarif_file: 'trivy.sarif'
 
       - name: Run Trivy (JSON)
-        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        uses: aquasecurity/trivy-action@v0.36.0
         env:
           TRIVY_DB_REPOSITORY: public.ecr.aws/aquasecurity/trivy-db:2
         with:
