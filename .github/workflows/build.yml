@@ -71,21 +71,21 @@ jobs:
         "NUGET_PACKAGES=D:\.nuget\packages" >> ${env:GITHUB_ENV}
 
     - name: Checkout code
-      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      uses: actions/checkout@v7.0.1
       with:
         filter: 'tree:0'
         persist-credentials: false
         show-progress: false
 
     - name: Setup .NET SDK
-      uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+      uses: actions/setup-dotnet@v6.1.0
 
     - name: Build, test and publish
       shell: pwsh
       run: ./build.ps1
 
     - name: Azure log in
-      uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 # v3.1.0
+      uses: azure/login@v3.1.0
       if: env.PUBLISH_CONTAINER == 'true'
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -107,7 +107,7 @@ jobs:
         dotnet publish ./src/SignInWithApple --arch x64 --os linux -p:PublishProfile=DefaultContainer
 
     - name: Attest container image
-      uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+      uses: actions/attest@v4.2.2
       if: steps.publish-container.outputs.container-digest != ''
       with:
         create-storage-record: false
@@ -132,14 +132,14 @@ jobs:
     steps:
 
     - name: Azure log in
-      uses: azure/login@a641126d1b8aa4d1fa005f4f92df94a3a4c4c906 # v3.1.0
+      uses: azure/login@v3.1.0
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Deploy container to Azure App Service
-      uses: azure/webapps-deploy@02a81bead70021f5284939794bcec79c271ab383 # v3.0.8
+      uses: azure/webapps-deploy@v3.0.8
       id: deploy_production
       with:
         app-name: ${{ vars.AZURE_WEBAPP_NAME }}
