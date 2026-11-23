@@ -24,7 +24,7 @@ workflows:
         - 'actions/dependency-review-action@v5.0.1'
     '.github/workflows/lint.yml':
         - 'actions/checkout@v7.0.1'
-        - 'davidanson/markdownlint-cli2-action@v25.0.0'
+        - 'davidanson/markdownlint-cli2-action@v25.1.0'
         - 'martincostello/lint-actions-powershell@v1.0.2'
         - 'zizmorcore/zizmor-action@v0.9.0'
 dependencies:
@@ -99,9 +99,9 @@ dependencies:
         commit: 'sha1-02a81bead70021f5284939794bcec79c271ab383'
         owner_id: 6844498
         repo_id: 206312133
-    'davidanson/markdownlint-cli2-action@v25.0.0':
-        ref: 'v25.0.0'
-        commit: 'sha1-696eb3f2509270d7b882d2aa68347bc676e7af34'
+    'davidanson/markdownlint-cli2-action@v25.1.0':
+        ref: 'v25.1.0'
+        commit: 'sha1-3ce8f712b5d8f31acd8e201be6d97e3d2bb23eb7'
         owner_id: 1828270
         repo_id: 329203602
     'github/codeql-action@33d7b85da1a04171e211befe2c739303b9a4c066':
